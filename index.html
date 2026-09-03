@@ -329,16 +329,12 @@
           <div id="strategies-grid-container" class="strategy-grid">
             <!-- Dynamically Rendered Strategies -->
           </div>
-
-        </div>
-
-
         <!-- =========================================================
-             SCREEN: POSITION SIZE & RISK CALCULATOR
+             SCREEN: CALCULATOR (Simple Standard Calculator + Position Size)
              ========================================================= -->
         <div id="page-calculator" class="page-view">
           
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
             <div style="display: flex; align-items: center; gap: 12px;">
               <button class="back-btn" onclick="navigateTo('dashboard')">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -347,111 +343,180 @@
                 </svg>
               </button>
               <div>
-                <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF;">Position Size &amp; Risk Calculator</h1>
-                <p style="font-size: 12px; color: var(--text-muted);">Accurately calculate quantity, capital at risk, and potential returns in Rupees (₹)</p>
+                <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF;">Trading Calculator</h1>
+                <p style="font-size: 12px; color: var(--text-muted);">Quick calculations for position sizing, percentages, and trade math.</p>
+              </div>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="calc-tabs" style="margin-bottom: 0;">
+              <button id="btn-tab-simple" class="calc-tab-btn active" onclick="switchCalcTab('simple')">
+                🧮 Simple Calculator
+              </button>
+              <button id="btn-tab-position" class="calc-tab-btn" onclick="switchCalcTab('position')">
+                ⚖️ Position &amp; Risk Sizer
+              </button>
+            </div>
+          </div>
+
+          <!-- TAB 1: SIMPLE STANDARD CALCULATOR -->
+          <div id="calc-view-simple" style="display: block;">
+            <div class="simple-calc-container">
+              
+              <!-- Screen Display -->
+              <div class="calc-screen">
+                <div id="simple-calc-history" class="calc-history-text"></div>
+                <div id="simple-calc-display" class="calc-main-value">0</div>
+              </div>
+
+              <!-- Quick Trader Math Helpers -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px;">
+                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('plus10')">+10%</button>
+                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('minus10')">-10%</button>
+                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('risk1')">1% Risk</button>
+                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('double')">2x (1:2)</button>
+              </div>
+
+              <!-- Keypad Grid -->
+              <div class="calc-keypad">
+                <button type="button" class="c-btn btn-clear" onclick="calcClear()">AC</button>
+                <button type="button" class="c-btn" onclick="calcBackspace()">⌫</button>
+                <button type="button" class="c-btn btn-op" onclick="calcOperator('%')">%</button>
+                <button type="button" class="c-btn btn-op" onclick="calcOperator('/')">÷</button>
+
+                <button type="button" class="c-btn" onclick="calcNumber('7')">7</button>
+                <button type="button" class="c-btn" onclick="calcNumber('8')">8</button>
+                <button type="button" class="c-btn" onclick="calcNumber('9')">9</button>
+                <button type="button" class="c-btn btn-op" onclick="calcOperator('*')">×</button>
+
+                <button type="button" class="c-btn" onclick="calcNumber('4')">4</button>
+                <button type="button" class="c-btn" onclick="calcNumber('5')">5</button>
+                <button type="button" class="c-btn" onclick="calcNumber('6')">6</button>
+                <button type="button" class="c-btn btn-op" onclick="calcOperator('-')">−</button>
+
+                <button type="button" class="c-btn" onclick="calcNumber('1')">1</button>
+                <button type="button" class="c-btn" onclick="calcNumber('2')">2</button>
+                <button type="button" class="c-btn" onclick="calcNumber('3')">3</button>
+                <button type="button" class="c-btn btn-op" onclick="calcOperator('+')">+</button>
+
+                <button type="button" class="c-btn" onclick="calcNumber('00')">00</button>
+                <button type="button" class="c-btn" onclick="calcNumber('0')">0</button>
+                <button type="button" class="c-btn" onclick="calcDot()">.</button>
+                <button type="button" class="c-btn btn-equals" onclick="calcEquals()">=</button>
+              </div>
+
+              <div style="font-size: 10px; color: var(--text-dim); text-align: center; margin-top: 14px; font-family: var(--font-mono);">
+                ⌨️ Keyboard supported: numbers, +, -, *, /, Enter, Backspace, Esc
               </div>
             </div>
           </div>
 
-          <div class="calc-grid-split">
-            
-            <!-- Left Inputs Panel -->
-            <div class="form-container" style="margin: 0; max-width: 100%;">
-              <h3 style="font-size: 15px; font-weight: 700; color: #FFFFFF; margin-bottom: 16px; border-bottom: 1px solid var(--border-card); pb-3;">
-                Trade Parameters
-              </h3>
+          <!-- TAB 2: POSITION SIZE & RISK SIZER -->
+          <div id="calc-view-position" style="display: none;">
+            <div class="calc-grid-split">
+              
+              <!-- Left Inputs Panel -->
+              <div class="form-container" style="margin: 0; max-width: 100%;">
+                <h3 style="font-size: 15px; font-weight: 700; color: #FFFFFF; margin-bottom: 16px; border-bottom: 1px solid var(--border-card); pb-3;">
+                  Trade Parameters
+                </h3>
 
-              <div class="form-row-2">
-                <div class="form-field">
-                  <label class="field-label">Account Balance (<span class="currency-symbol">₹</span>)</label>
-                  <input type="number" id="calc-account-bal" class="field-input" value="500000" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                <div class="form-row-2">
+                  <div class="form-field">
+                    <label class="field-label">Account Balance (<span class="currency-symbol">₹</span>)</label>
+                    <input type="number" id="calc-account-bal" class="field-input" value="500000" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                  </div>
+                  <div class="form-field">
+                    <label class="field-label">Risk Per Trade (%)</label>
+                    <input type="number" step="0.1" id="calc-risk-pct" class="field-input" value="1.0" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                  </div>
                 </div>
-                <div class="form-field">
-                  <label class="field-label">Risk Per Trade (%)</label>
-                  <input type="number" step="0.1" id="calc-risk-pct" class="field-input" value="1.0" oninput="runCalculator()" style="font-family: var(--font-mono);">
+
+                <div class="form-row-3">
+                  <div class="form-field">
+                    <label class="field-label">Entry Price (<span class="currency-symbol">₹</span>)</label>
+                    <input type="number" step="any" id="calc-entry-price" class="field-input" value="2450.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                  </div>
+                  <div class="form-field">
+                    <label class="field-label">Stop Loss Price (<span class="currency-symbol">₹</span>)</label>
+                    <input type="number" step="any" id="calc-stop-loss" class="field-input" value="2425.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                  </div>
+                  <div class="form-field">
+                    <label class="field-label">Target Price (<span class="currency-symbol">₹</span>)</label>
+                    <input type="number" step="any" id="calc-target-price" class="field-input" value="2510.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                  </div>
+                </div>
+
+                <div class="form-field" style="margin-top: 14px;">
+                  <label class="field-label">Trading Instrument / Asset</label>
+                  <select id="calc-instrument" class="field-select">
+                    <option value="RELIANCE">RELIANCE (NSE Equities)</option>
+                    <option value="NIFTY 50">NIFTY 50 (Index)</option>
+                    <option value="BANKNIFTY">BANKNIFTY (Index)</option>
+                    <option value="TCS">TCS (NSE)</option>
+                    <option value="INFY">INFY (NSE)</option>
+                    <option value="BTC/INR">BTC / INR (Crypto)</option>
+                    <option value="USD/INR">USD / INR (Forex)</option>
+                  </select>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                  <button type="button" class="btn-save-full" onclick="applyCalcToAddTrade()" style="margin: 0;">
+                    + Apply to Add Trade Form
+                  </button>
                 </div>
               </div>
 
-              <div class="form-row-3">
-                <div class="form-field">
-                  <label class="field-label">Entry Price (<span class="currency-symbol">₹</span>)</label>
-                  <input type="number" step="any" id="calc-entry-price" class="field-input" value="2450.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
-                </div>
-                <div class="form-field">
-                  <label class="field-label">Stop Loss Price (<span class="currency-symbol">₹</span>)</label>
-                  <input type="number" step="any" id="calc-stop-loss" class="field-input" value="2425.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
-                </div>
-                <div class="form-field">
-                  <label class="field-label">Target Price (<span class="currency-symbol">₹</span>)</label>
-                  <input type="number" step="any" id="calc-target-price" class="field-input" value="2510.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
-                </div>
-              </div>
+              <!-- Right Results Output Panel -->
+              <div class="calc-output-card">
+                <div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-card); padding-bottom: 12px; margin-bottom: 8px;">
+                    <span style="font-size: 14px; font-weight: 700; color: #FFFFFF;">Calculation Summary</span>
+                    <span id="calc-rr-badge" style="font-size: 12px; font-family: var(--font-mono); font-weight: 700; background: rgba(34, 197, 94, 0.15); color: var(--emerald); border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 6px;">
+                      R:R 1 : 2.4
+                    </span>
+                  </div>
 
-              <div class="form-field" style="margin-top: 14px;">
-                <label class="field-label">Trading Instrument / Asset</label>
-                <select id="calc-instrument" class="field-select">
-                  <option value="RELIANCE">RELIANCE (NSE Equities)</option>
-                  <option value="NIFTY 50">NIFTY 50 (Index)</option>
-                  <option value="BANKNIFTY">BANKNIFTY (Index)</option>
-                  <option value="TCS">TCS (NSE)</option>
-                  <option value="INFY">INFY (NSE)</option>
-                  <option value="BTC/INR">BTC / INR (Crypto)</option>
-                  <option value="USD/INR">USD / INR (Forex)</option>
-                </select>
-              </div>
+                  <div class="calc-stat-row">
+                    <span class="calc-stat-label">Maximum Capital at Risk:</span>
+                    <span id="out-risk-amount" class="calc-stat-value" style="color: var(--red-loss-text);">₹5,000.00</span>
+                  </div>
 
-              <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button type="button" class="btn-save-full" onclick="applyCalcToAddTrade()" style="margin: 0;">
-                  + Apply to Add Trade Form
-                </button>
-              </div>
-            </div>
+                  <div class="calc-stat-row">
+                    <span class="calc-stat-label">Calculated Position Size (Quantity):</span>
+                    <span id="out-qty" class="calc-stat-value" style="color: var(--emerald);">200 Units</span>
+                  </div>
 
-            <!-- Right Results Output Panel -->
-            <div class="calc-output-card">
-              <div>
-                <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-card); padding-bottom: 12px; margin-bottom: 8px;">
-                  <span style="font-size: 14px; font-weight: 700; color: #FFFFFF;">Calculation Summary</span>
-                  <span id="calc-rr-badge" style="font-size: 12px; font-family: var(--font-mono); font-weight: 700; background: rgba(34, 197, 94, 0.15); color: var(--emerald); border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 6px;">
-                    R:R 1 : 2.4
+                  <div class="calc-stat-row">
+                    <span class="calc-stat-label">Total Trade Capital Required:</span>
+                    <span id="out-total-value" class="calc-stat-value">₹4,90,000.00</span>
+                  </div>
+
+                  <div class="calc-stat-row">
+                    <span class="calc-stat-label">Per Share Risk (Stop Distance):</span>
+                    <span id="out-stop-distance" class="calc-stat-value">₹25.00 (1.02%)</span>
+                  </div>
+
+                  <div class="calc-stat-row">
+                    <span class="calc-stat-label">Potential Gross Profit:</span>
+                    <span id="out-potential-profit" class="calc-stat-value" style="color: var(--emerald);">+₹12,000.00</span>
+                  </div>
+                </div>
+
+                <div style="background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 12px; padding: 12px; margin-top: 14px;">
+                  <span style="font-size: 11px; color: var(--emerald); font-weight: 600; display: block; margin-bottom: 2px;">
+                    ✓ Risk Discipline Protocol Passed
+                  </span>
+                  <span style="font-size: 10px; color: var(--text-muted);">
+                    Risk per trade is strictly capped based on your configured Max Risk % in Settings.
                   </span>
                 </div>
-
-                <div class="calc-stat-row">
-                  <span class="calc-stat-label">Maximum Capital at Risk:</span>
-                  <span id="out-risk-amount" class="calc-stat-value" style="color: var(--red-loss-text);">₹5,000.00</span>
-                </div>
-
-                <div class="calc-stat-row">
-                  <span class="calc-stat-label">Calculated Position Size (Quantity):</span>
-                  <span id="out-qty" class="calc-stat-value" style="color: var(--emerald);">200 Units</span>
-                </div>
-
-                <div class="calc-stat-row">
-                  <span class="calc-stat-label">Total Trade Capital Required:</span>
-                  <span id="out-total-value" class="calc-stat-value">₹4,90,000.00</span>
-                </div>
-
-                <div class="calc-stat-row">
-                  <span class="calc-stat-label">Per Share Risk (Stop Distance):</span>
-                  <span id="out-stop-distance" class="calc-stat-value">₹25.00 (1.02%)</span>
-                </div>
-
-                <div class="calc-stat-row">
-                  <span class="calc-stat-label">Potential Gross Profit:</span>
-                  <span id="out-potential-profit" class="calc-stat-value" style="color: var(--emerald);">+₹12,000.00</span>
-                </div>
               </div>
 
-              <div style="background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 12px; padding: 12px; margin-top: 14px;">
-                <span style="font-size: 11px; color: var(--emerald); font-weight: 600; display: block; margin-bottom: 2px;">
-                  ✓ Risk Discipline Protocol Passed
-                </span>
-                <span style="font-size: 10px; color: var(--text-muted);">
-                  Risk per trade is strictly capped based on your configured Max Risk % in Settings.
-                </span>
-              </div>
             </div>
+          </div>
+
+        </div>div>
 
           </div>
 
@@ -1259,6 +1324,165 @@
       showToast(`Applied ${qty} shares calculation (${formatMoney(profitVal)} profit) to Add Trade!`, 'success');
       navigateTo('add-trade');
     }
+
+    // =========================================================================
+    // SIMPLE STANDARD CALCULATOR ENGINE
+    // =========================================================================
+    let simpleCalcCurrent = '0';
+    let simpleCalcPrev = '';
+    let simpleCalcOperator = null;
+    let simpleCalcResetNext = false;
+
+    function switchCalcTab(tab) {
+      const btnSimple = document.getElementById('btn-tab-simple');
+      const btnPos = document.getElementById('btn-tab-position');
+      const viewSimple = document.getElementById('calc-view-simple');
+      const viewPos = document.getElementById('calc-view-position');
+
+      if (tab === 'simple') {
+        btnSimple.classList.add('active');
+        btnPos.classList.remove('active');
+        viewSimple.style.display = 'block';
+        viewPos.style.display = 'none';
+      } else {
+        btnPos.classList.add('active');
+        btnSimple.classList.remove('active');
+        viewPos.style.display = 'block';
+        viewSimple.style.display = 'none';
+        runCalculator();
+      }
+    }
+
+    function updateCalcDisplay() {
+      const display = document.getElementById('simple-calc-display');
+      const history = document.getElementById('simple-calc-history');
+      if (display) display.innerText = simpleCalcCurrent;
+      if (history) {
+        if (simpleCalcOperator && simpleCalcPrev) {
+          const opSymbol = simpleCalcOperator === '*' ? '×' : (simpleCalcOperator === '/' ? '÷' : simpleCalcOperator);
+          history.innerText = `${simpleCalcPrev} ${opSymbol}`;
+        } else {
+          history.innerText = '';
+        }
+      }
+    }
+
+    function calcNumber(digit) {
+      if (simpleCalcResetNext || simpleCalcCurrent === '0') {
+        simpleCalcCurrent = digit === '00' ? '0' : digit;
+        simpleCalcResetNext = false;
+      } else {
+        if (simpleCalcCurrent.length < 14) {
+          simpleCalcCurrent += digit;
+        }
+      }
+      updateCalcDisplay();
+    }
+
+    function calcDot() {
+      if (simpleCalcResetNext) {
+        simpleCalcCurrent = '0.';
+        simpleCalcResetNext = false;
+      } else if (!simpleCalcCurrent.includes('.')) {
+        simpleCalcCurrent += '.';
+      }
+      updateCalcDisplay();
+    }
+
+    function calcOperator(op) {
+      if (simpleCalcOperator && !simpleCalcResetNext) {
+        calcEquals();
+      }
+      simpleCalcPrev = simpleCalcCurrent;
+      simpleCalcOperator = op;
+      simpleCalcResetNext = true;
+      updateCalcDisplay();
+    }
+
+    function calcEquals() {
+      if (!simpleCalcOperator || !simpleCalcPrev) return;
+
+      const prev = parseFloat(simpleCalcPrev);
+      const curr = parseFloat(simpleCalcCurrent);
+      let res = 0;
+
+      switch (simpleCalcOperator) {
+        case '+': res = prev + curr; break;
+        case '-': res = prev - curr; break;
+        case '*': res = prev * curr; break;
+        case '/': res = curr !== 0 ? prev / curr : 'Error'; break;
+        case '%': res = (prev * curr) / 100; break;
+      }
+
+      const history = document.getElementById('simple-calc-history');
+      const opSymbol = simpleCalcOperator === '*' ? '×' : (simpleCalcOperator === '/' ? '÷' : simpleCalcOperator);
+      if (history) history.innerText = `${simpleCalcPrev} ${opSymbol} ${simpleCalcCurrent} =`;
+
+      simpleCalcCurrent = typeof res === 'number' ? (Number.isInteger(res) ? res.toString() : parseFloat(res.toFixed(6)).toString()) : 'Error';
+      simpleCalcOperator = null;
+      simpleCalcPrev = '';
+      simpleCalcResetNext = true;
+      updateCalcDisplay();
+    }
+
+    function calcClear() {
+      simpleCalcCurrent = '0';
+      simpleCalcPrev = '';
+      simpleCalcOperator = null;
+      simpleCalcResetNext = false;
+      updateCalcDisplay();
+    }
+
+    function calcBackspace() {
+      if (simpleCalcResetNext) return;
+      if (simpleCalcCurrent.length > 1) {
+        simpleCalcCurrent = simpleCalcCurrent.slice(0, -1);
+      } else {
+        simpleCalcCurrent = '0';
+      }
+      updateCalcDisplay();
+    }
+
+    function calcQuickOp(type) {
+      let val = parseFloat(simpleCalcCurrent) || 0;
+      switch (type) {
+        case 'plus10': val = val * 1.10; break;
+        case 'minus10': val = val * 0.90; break;
+        case 'risk1': val = val * 0.01; break;
+        case 'double': val = val * 2.0; break;
+      }
+      simpleCalcCurrent = Number.isInteger(val) ? val.toString() : parseFloat(val.toFixed(2)).toString();
+      simpleCalcResetNext = true;
+      updateCalcDisplay();
+    }
+
+    // Physical Keyboard Listener for Calculator
+    window.addEventListener('keydown', (e) => {
+      const calcPage = document.getElementById('page-calculator');
+      const viewSimple = document.getElementById('calc-view-simple');
+      if (!calcPage || !calcPage.classList.contains('active-page') || viewSimple.style.display === 'none') {
+        return;
+      }
+
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      if (e.key >= '0' && e.key <= '9') {
+        calcNumber(e.key);
+      } else if (e.key === '.') {
+        calcDot();
+      } else if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        calcOperator(e.key);
+      } else if (e.key === 'Enter' || e.key === '=') {
+        e.preventDefault();
+        calcEquals();
+      } else if (e.key === 'Backspace') {
+        calcBackspace();
+      } else if (e.key === 'Escape') {
+        calcClear();
+      } else if (e.key === '%') {
+        calcOperator('%');
+      }
+    });
 
     // Strategy Playbook Functions
     function renderStrategiesGrid() {

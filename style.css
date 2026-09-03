@@ -1218,112 +1218,136 @@ body {
   margin-bottom: 16px;
 }
 
-/* Simple Standard Calculator Styles */
-.simple-calc-container {
-  max-width: 380px;
+/* ==========================================================================
+   PHONE-STYLE (iOS / ANDROID) CALCULATOR DESIGN
+   ========================================================================== */
+.phone-calc-wrapper {
+  max-width: 360px;
   margin: 0 auto;
-  background: var(--bg-card);
+  background: #060913;
   border: 1px solid var(--border-card);
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+  border-radius: 36px;
+  padding: 24px 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
 }
 
-.calc-screen {
-  background: #080D1A;
-  border: 1px solid var(--border-card);
-  border-radius: 14px;
-  padding: 16px 20px;
-  margin-bottom: 20px;
+.phone-screen {
+  padding: 24px 12px 16px 12px;
   text-align: right;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
-.calc-history-text {
-  font-size: 13px;
+.phone-history {
+  font-size: 15px;
   color: var(--text-dim);
   font-family: var(--font-mono);
-  min-height: 18px;
+  min-height: 22px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.calc-main-value {
-  font-size: 32px;
-  font-weight: 700;
-  font-family: var(--font-mono);
+.phone-digits {
+  font-size: 48px;
+  font-weight: 300;
+  font-family: var(--font-sans);
   color: #FFFFFF;
-  margin-top: 4px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: font-size 0.15s;
 }
 
-.calc-keypad {
+.phone-keypad-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 12px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 10px;
 }
 
-.c-btn {
-  height: 52px;
-  border-radius: 12px;
-  border: 1px solid var(--border-card);
-  background: #0B1220;
-  color: #FFFFFF;
-  font-size: 16px;
-  font-weight: 600;
-  font-family: var(--font-mono);
+.p-key {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: none;
+  font-size: 24px;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.12s ease-in-out;
   user-select: none;
+  outline: none;
 }
 
-.c-btn:hover {
-  background: #15243E;
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-1px);
+.p-key:active {
+  transform: scale(0.92);
+  filter: brightness(1.3);
 }
 
-.c-btn:active {
-  transform: translateY(1px);
+/* Number keys (Dark Charcoal) */
+.p-key-num {
+  background: #1E293B;
+  color: #FFFFFF;
+}
+.p-key-num:hover {
+  background: #334155;
 }
 
-.c-btn.btn-op {
-  background: rgba(37, 99, 235, 0.12);
-  border-color: rgba(37, 99, 235, 0.25);
-  color: #60A5FA;
-  font-size: 18px;
-}
-
-.c-btn.btn-op:hover {
-  background: rgba(37, 99, 235, 0.2);
-}
-
-.c-btn.btn-clear {
-  background: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.25);
-  color: #F87171;
-}
-
-.c-btn.btn-clear:hover {
-  background: rgba(239, 68, 68, 0.2);
-}
-
-.c-btn.btn-equals {
-  background: var(--emerald);
-  border-color: var(--emerald);
-  color: #080D1A;
+/* Function keys (Light Slate) */
+.p-key-fn {
+  background: #334155;
+  color: #F8FAFC;
   font-size: 20px;
+  font-weight: 600;
+}
+.p-key-fn:hover {
+  background: #475569;
+}
+
+/* Operator keys (Vibrant Orange / Emerald) */
+.p-key-op {
+  background: #F59E0B;
+  color: #080D1A;
+  font-size: 26px;
+  font-weight: 700;
+}
+.p-key-op:hover {
+  background: #D97706;
+}
+.p-key-op.active {
+  background: #FFFFFF;
+  color: #F59E0B;
+}
+
+/* Equals key (Emerald Green) */
+.p-key-eq {
+  background: var(--emerald);
+  color: #080D1A;
+  font-size: 28px;
   font-weight: 800;
 }
-
-.c-btn.btn-equals:hover {
+.p-key-eq:hover {
   background: var(--emerald-dark);
-  color: #FFFFFF;
+}
+
+/* Wide 0 Key */
+.p-key-zero {
+  width: 140px;
+  border-radius: 34px;
+  grid-column: span 2;
+  justify-content: flex-start;
+  padding-left: 24px;
 }
 
 .calc-tabs {
@@ -1354,3 +1378,128 @@ body {
   color: #080D1A;
   font-weight: 700;
 }
+
+/* ==========================================================================
+   GLOBAL RESPONSIVENESS (Mobile, Tablet, Desktop)
+   ========================================================================== */
+.mobile-menu-btn {
+  display: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: #FFFFFF;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sidebar-backdrop-mobile {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 800;
+  display: none;
+}
+
+.sidebar-backdrop-mobile.open {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  body {
+    position: relative;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 900;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .top-navbar {
+    padding: 0 16px;
+  }
+
+  .page-surface {
+    padding: 20px 14px;
+  }
+
+  .metrics-row-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .form-row-2, .form-row-3 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .calc-grid-split {
+    grid-template-columns: 1fr;
+  }
+
+  .strategy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-cards-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .metrics-row-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-cards-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .p-key {
+    width: 54px;
+    height: 54px;
+    font-size: 20px;
+  }
+
+  .p-key-zero {
+    width: 120px;
+    padding-left: 20px;
+  }
+
+  .phone-calc-wrapper {
+    padding: 16px 12px;
+  }
+
+  .phone-digits {
+    font-size: 38px;
+  }
+
+  .calc-tabs {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

@@ -11,10 +11,13 @@
 </head>
 <body>
 
+  <!-- Mobile Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop-mobile" onclick="closeMobileSidebar()"></div>
+
   <!-- =========================================================================
-       FIXED LEFT SIDEBAR (240px)
+       FIXED / MOBILE RESPONSIVE SIDEBAR (240px)
        ========================================================================= -->
-  <aside class="sidebar">
+  <aside id="app-sidebar" class="sidebar">
     <div>
       <div class="sidebar-brand">
         <div class="brand-icon">
@@ -125,6 +128,15 @@
     <header class="top-navbar" style="position: relative;">
       
       <div style="display: flex; align-items: center; gap: 12px; margin-right: auto;">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-btn" onclick="toggleMobileSidebar()" title="Toggle Navigation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
         <span id="active-trader-badge" style="font-size: 11px; font-family: var(--font-mono); color: var(--emerald); background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25); padding: 4px 10px; border-radius: 6px;">
           Active Profile: Rajiv Gowda
         </span>
@@ -359,54 +371,58 @@
             </div>
           </div>
 
-          <!-- TAB 1: SIMPLE STANDARD CALCULATOR -->
+          <!-- TAB 1: PHONE-STYLE SMARTPHONE CALCULATOR -->
           <div id="calc-view-simple" style="display: block;">
-            <div class="simple-calc-container">
+            <div class="phone-calc-wrapper">
               
-              <!-- Screen Display -->
-              <div class="calc-screen">
-                <div id="simple-calc-history" class="calc-history-text"></div>
-                <div id="simple-calc-display" class="calc-main-value">0</div>
+              <!-- Phone Screen -->
+              <div class="phone-screen">
+                <div id="simple-calc-history" class="phone-history"></div>
+                <div id="simple-calc-display" class="phone-digits">0</div>
               </div>
 
-              <!-- Quick Trader Math Helpers -->
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px;">
-                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('plus10')">+10%</button>
-                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('minus10')">-10%</button>
-                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('risk1')">1% Risk</button>
-                <button type="button" class="btn-reset-filters" style="padding: 6px 4px; font-size: 10px; font-family: var(--font-mono);" onclick="calcQuickOp('double')">2x (1:2)</button>
+              <!-- Quick Trading Math Shortcuts -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px;">
+                <button type="button" class="btn-reset-filters" style="padding: 6px 2px; font-size: 11px; font-family: var(--font-mono); border-radius: 8px;" onclick="calcQuickOp('plus10')">+10%</button>
+                <button type="button" class="btn-reset-filters" style="padding: 6px 2px; font-size: 11px; font-family: var(--font-mono); border-radius: 8px;" onclick="calcQuickOp('minus10')">-10%</button>
+                <button type="button" class="btn-reset-filters" style="padding: 6px 2px; font-size: 11px; font-family: var(--font-mono); border-radius: 8px;" onclick="calcQuickOp('risk1')">1% Risk</button>
+                <button type="button" class="btn-reset-filters" style="padding: 6px 2px; font-size: 11px; font-family: var(--font-mono); border-radius: 8px;" onclick="calcQuickOp('double')">2x R:R</button>
               </div>
 
-              <!-- Keypad Grid -->
-              <div class="calc-keypad">
-                <button type="button" class="c-btn btn-clear" onclick="calcClear()">AC</button>
-                <button type="button" class="c-btn" onclick="calcBackspace()">⌫</button>
-                <button type="button" class="c-btn btn-op" onclick="calcOperator('%')">%</button>
-                <button type="button" class="c-btn btn-op" onclick="calcOperator('/')">÷</button>
+              <!-- Authentic Smartphone 4-Column Keypad -->
+              <div class="phone-keypad-grid">
+                <!-- Row 1: AC, +/-, %, ÷ -->
+                <button type="button" class="p-key p-key-fn" onclick="calcClear()">AC</button>
+                <button type="button" class="p-key p-key-fn" onclick="calcToggleSign()">±</button>
+                <button type="button" class="p-key p-key-fn" onclick="calcOperator('%')">%</button>
+                <button type="button" class="p-key p-key-op" id="op-div" onclick="calcOperator('/')">÷</button>
 
-                <button type="button" class="c-btn" onclick="calcNumber('7')">7</button>
-                <button type="button" class="c-btn" onclick="calcNumber('8')">8</button>
-                <button type="button" class="c-btn" onclick="calcNumber('9')">9</button>
-                <button type="button" class="c-btn btn-op" onclick="calcOperator('*')">×</button>
+                <!-- Row 2: 7, 8, 9, × -->
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('7')">7</button>
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('8')">8</button>
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('9')">9</button>
+                <button type="button" class="p-key p-key-op" id="op-mul" onclick="calcOperator('*')">×</button>
 
-                <button type="button" class="c-btn" onclick="calcNumber('4')">4</button>
-                <button type="button" class="c-btn" onclick="calcNumber('5')">5</button>
-                <button type="button" class="c-btn" onclick="calcNumber('6')">6</button>
-                <button type="button" class="c-btn btn-op" onclick="calcOperator('-')">−</button>
+                <!-- Row 3: 4, 5, 6, − -->
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('4')">4</button>
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('5')">5</button>
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('6')">6</button>
+                <button type="button" class="p-key p-key-op" id="op-sub" onclick="calcOperator('-')">−</button>
 
-                <button type="button" class="c-btn" onclick="calcNumber('1')">1</button>
-                <button type="button" class="c-btn" onclick="calcNumber('2')">2</button>
-                <button type="button" class="c-btn" onclick="calcNumber('3')">3</button>
-                <button type="button" class="c-btn btn-op" onclick="calcOperator('+')">+</button>
+                <!-- Row 4: 1, 2, 3, + -->
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('1')">1</button>
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('2')">2</button>
+                <button type="button" class="p-key p-key-num" onclick="calcNumber('3')">3</button>
+                <button type="button" class="p-key p-key-op" id="op-add" onclick="calcOperator('+')">+</button>
 
-                <button type="button" class="c-btn" onclick="calcNumber('00')">00</button>
-                <button type="button" class="c-btn" onclick="calcNumber('0')">0</button>
-                <button type="button" class="c-btn" onclick="calcDot()">.</button>
-                <button type="button" class="c-btn btn-equals" onclick="calcEquals()">=</button>
+                <!-- Row 5: Wide 0, ., = -->
+                <button type="button" class="p-key p-key-num p-key-zero" onclick="calcNumber('0')">0</button>
+                <button type="button" class="p-key p-key-num" onclick="calcDot()">.</button>
+                <button type="button" class="p-key p-key-eq" onclick="calcEquals()">=</button>
               </div>
 
-              <div style="font-size: 10px; color: var(--text-dim); text-align: center; margin-top: 14px; font-family: var(--font-mono);">
-                ⌨️ Keyboard supported: numbers, +, -, *, /, Enter, Backspace, Esc
+              <div style="font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 18px; font-family: var(--font-mono);">
+                📱 Phone touch &amp; PC keyboard supported
               </div>
             </div>
           </div>
@@ -1353,10 +1369,45 @@
       }
     }
 
+    // Mobile Sidebar Drawer Controls
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      sidebar.classList.toggle('mobile-open');
+      backdrop.classList.toggle('open');
+    }
+
+    function closeMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      if (sidebar) sidebar.classList.remove('mobile-open');
+      if (backdrop) backdrop.classList.remove('open');
+    }
+
     function updateCalcDisplay() {
       const display = document.getElementById('simple-calc-display');
       const history = document.getElementById('simple-calc-history');
-      if (display) display.innerText = simpleCalcCurrent;
+      if (display) {
+        display.innerText = simpleCalcCurrent;
+        // Auto-scale font size if number is long
+        if (simpleCalcCurrent.length > 9) {
+          display.style.fontSize = '32px';
+        } else if (simpleCalcCurrent.length > 6) {
+          display.style.fontSize = '40px';
+        } else {
+          display.style.fontSize = '48px';
+        }
+      }
+
+      // Highlight active operator key
+      document.querySelectorAll('.p-key-op').forEach(k => k.classList.remove('active'));
+      if (simpleCalcOperator) {
+        if (simpleCalcOperator === '/') document.getElementById('op-div')?.classList.add('active');
+        if (simpleCalcOperator === '*') document.getElementById('op-mul')?.classList.add('active');
+        if (simpleCalcOperator === '-') document.getElementById('op-sub')?.classList.add('active');
+        if (simpleCalcOperator === '+') document.getElementById('op-add')?.classList.add('active');
+      }
+
       if (history) {
         if (simpleCalcOperator && simpleCalcPrev) {
           const opSymbol = simpleCalcOperator === '*' ? '×' : (simpleCalcOperator === '/' ? '÷' : simpleCalcOperator);
@@ -1365,6 +1416,16 @@
           history.innerText = '';
         }
       }
+    }
+
+    function calcToggleSign() {
+      if (simpleCalcCurrent === '0' || simpleCalcCurrent === 'Error') return;
+      if (simpleCalcCurrent.startsWith('-')) {
+        simpleCalcCurrent = simpleCalcCurrent.substring(1);
+      } else {
+        simpleCalcCurrent = '-' + simpleCalcCurrent;
+      }
+      updateCalcDisplay();
     }
 
     function calcNumber(digit) {
@@ -1923,6 +1984,7 @@
       const surface = document.querySelector('.page-surface');
       if (surface) surface.scrollTop = 0;
       closeUserDropdown();
+      closeMobileSidebar();
 
       if (pageId === 'calculator') runCalculator();
     }

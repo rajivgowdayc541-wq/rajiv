@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TradeJournal — Premium Dark Trading Journal UI</title>
+  <title>TradeJournal — Premium Dark Trading Journal UI (INR)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -35,6 +35,21 @@
             <rect x="3" y="14" width="7" height="7"></rect>
           </svg>
           Dashboard
+        </button>
+
+        <button id="nav-calculator" class="nav-link" onclick="navigateTo('calculator')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+            <line x1="8" y1="6" x2="16" y2="6"></line>
+            <line x1="8" y1="10" x2="8" y2="10"></line>
+            <line x1="12" y1="10" x2="12" y2="10"></line>
+            <line x1="16" y1="10" x2="16" y2="10"></line>
+            <line x1="8" y1="14" x2="8" y2="14"></line>
+            <line x1="12" y1="14" x2="12" y2="14"></line>
+            <line x1="16" y1="14" x2="16" y2="14"></line>
+            <line x1="8" y1="18" x2="16" y2="18"></line>
+          </svg>
+          Calculator
         </button>
 
         <button id="nav-history" class="nav-link" onclick="navigateTo('history')">
@@ -77,7 +92,7 @@
     <div class="sidebar-bottom">
       <div class="balance-card">
         <div class="balance-label">Account Balance</div>
-        <div id="side-balance-val" class="balance-amount">$5,240.00</div>
+        <div id="side-balance-val" class="balance-amount">₹5,24,000.00</div>
         <div id="side-balance-change" class="balance-change">+10.4%</div>
       </div>
       <button class="logout-btn" onclick="openLoginModal()">
@@ -96,14 +111,37 @@
        ========================================================================= -->
   <div class="main-wrapper">
     
-    <!-- Top Bar with User Dropdown -->
+    <!-- Top Bar with Currency Switcher & User Profile -->
     <header class="top-navbar" style="position: relative;">
-      <div style="display: flex; align-items: center; gap: 8px; margin-right: auto;">
-        <span id="active-trader-badge" style="font-size: 11px; font-family: var(--font-mono); color: var(--emerald); background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25); padding: 3px 10px; border-radius: 6px;">
+      
+      <div style="display: flex; align-items: center; gap: 12px; margin-right: auto;">
+        <span id="active-trader-badge" style="font-size: 11px; font-family: var(--font-mono); color: var(--emerald); background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.25); padding: 4px 10px; border-radius: 6px;">
           Active Profile: Rajiv Gowda
         </span>
+
+        <!-- Currency Toggle Pill -->
+        <div class="currency-toggle-pill" title="Switch display currency">
+          <button id="btn-curr-inr" class="curr-btn active" onclick="setCurrency('INR')">₹ INR</button>
+          <button id="btn-curr-usd" class="curr-btn" onclick="setCurrency('USD')">$ USD</button>
+        </div>
       </div>
 
+      <!-- Quick Calculator Button -->
+      <button class="header-icon-btn" onclick="navigateTo('calculator')" title="Open Position Size Calculator">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+          <line x1="8" y1="6" x2="16" y2="6"></line>
+          <line x1="8" y1="10" x2="8" y2="10"></line>
+          <line x1="12" y1="10" x2="12" y2="10"></line>
+          <line x1="16" y1="10" x2="16" y2="10"></line>
+          <line x1="8" y1="14" x2="8" y2="14"></line>
+          <line x1="12" y1="14" x2="12" y2="14"></line>
+          <line x1="16" y1="14" x2="16" y2="14"></line>
+          <line x1="8" y1="18" x2="16" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Notification Button -->
       <button class="header-icon-btn" onclick="showToast('0 new notifications')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
@@ -121,9 +159,7 @@
         <div style="padding: 6px 12px; font-size: 11px; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">
           Switch Trader Account
         </div>
-        <div id="dropdown-accounts-list">
-          <!-- Dynamically Injected -->
-        </div>
+        <div id="dropdown-accounts-list"></div>
         <div class="dropdown-divider"></div>
         <button class="dropdown-item" onclick="openNewAccountModal()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -169,7 +205,7 @@
                   <polyline points="17 6 23 6 23 12"></polyline>
                 </svg>
               </div>
-              <div id="dash-today-pnl" class="metric-val green">+$240.00</div>
+              <div id="dash-today-pnl" class="metric-val green">+₹24,000.00</div>
               <div class="metric-footer green">
                 <span id="dash-today-percent">+4.80%</span>
                 <svg class="sparkline-svg" viewBox="0 0 50 18">
@@ -186,7 +222,7 @@
                   <line x1="1" y1="10" x2="23" y2="10"></line>
                 </svg>
               </div>
-              <div id="dash-balance" class="metric-val">$5,240.00</div>
+              <div id="dash-balance" class="metric-val">₹5,24,000.00</div>
               <div id="dash-balance-change" class="metric-footer green">+10.40%</div>
             </div>
 
@@ -252,6 +288,130 @@
 
 
         <!-- =========================================================
+             SCREEN: POSITION SIZE & RISK CALCULATOR (New Feature)
+             ========================================================= -->
+        <div id="page-calculator" class="page-view">
+          
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <button class="back-btn" onclick="navigateTo('dashboard')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+              </button>
+              <div>
+                <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF;">Position Size &amp; Risk Calculator</h1>
+                <p style="font-size: 12px; color: var(--text-muted);">Accurately calculate quantity, capital at risk, and potential returns in Rupees (₹)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-grid-split">
+            
+            <!-- Left Inputs Panel -->
+            <div class="form-container" style="margin: 0; max-width: 100%;">
+              <h3 style="font-size: 15px; font-weight: 700; color: #FFFFFF; margin-bottom: 16px; border-bottom: 1px solid var(--border-card); pb-3;">
+                Trade Parameters
+              </h3>
+
+              <div class="form-row-2">
+                <div class="form-field">
+                  <label class="field-label">Account Balance (<span class="currency-symbol">₹</span>)</label>
+                  <input type="number" id="calc-account-bal" class="field-input" value="524000" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                </div>
+                <div class="form-field">
+                  <label class="field-label">Risk Per Trade (%)</label>
+                  <input type="number" step="0.1" id="calc-risk-pct" class="field-input" value="1.0" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                </div>
+              </div>
+
+              <div class="form-row-3">
+                <div class="form-field">
+                  <label class="field-label">Entry Price (<span class="currency-symbol">₹</span>)</label>
+                  <input type="number" step="any" id="calc-entry-price" class="field-input" value="2450.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                </div>
+                <div class="form-field">
+                  <label class="field-label">Stop Loss Price (<span class="currency-symbol">₹</span>)</label>
+                  <input type="number" step="any" id="calc-stop-loss" class="field-input" value="2425.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                </div>
+                <div class="form-field">
+                  <label class="field-label">Target Price (<span class="currency-symbol">₹</span>)</label>
+                  <input type="number" step="any" id="calc-target-price" class="field-input" value="2510.00" oninput="runCalculator()" style="font-family: var(--font-mono);">
+                </div>
+              </div>
+
+              <div class="form-field" style="margin-top: 14px;">
+                <label class="field-label">Trading Instrument / Asset</label>
+                <select id="calc-instrument" class="field-select">
+                  <option value="RELIANCE">RELIANCE (NSE Equities)</option>
+                  <option value="NIFTY">NIFTY 50 (Index)</option>
+                  <option value="BANKNIFTY">BANKNIFTY (Index)</option>
+                  <option value="BTC/INR">BTC / INR (Crypto)</option>
+                  <option value="ETH/INR">ETH / INR (Crypto)</option>
+                  <option value="USD/INR">USD / INR (Forex)</option>
+                </select>
+              </div>
+
+              <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button type="button" class="btn-save-full" onclick="applyCalcToAddTrade()" style="margin: 0;">
+                  + Apply to Add Trade Form
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Results Output Panel -->
+            <div class="calc-output-card">
+              <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-card); padding-bottom: 12px; margin-bottom: 8px;">
+                  <span style="font-size: 14px; font-weight: 700; color: #FFFFFF;">Calculation Summary</span>
+                  <span id="calc-rr-badge" style="font-size: 12px; font-family: var(--font-mono); font-weight: 700; background: rgba(34, 197, 94, 0.15); color: var(--emerald); border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 6px;">
+                    R:R 1 : 2.4
+                  </span>
+                </div>
+
+                <div class="calc-stat-row">
+                  <span class="calc-stat-label">Maximum Capital at Risk:</span>
+                  <span id="out-risk-amount" class="calc-stat-value" style="color: var(--red-loss-text);">₹5,240.00</span>
+                </div>
+
+                <div class="calc-stat-row">
+                  <span class="calc-stat-label">Calculated Position Size (Quantity):</span>
+                  <span id="out-qty" class="calc-stat-value" style="color: var(--emerald);">209 Units</span>
+                </div>
+
+                <div class="calc-stat-row">
+                  <span class="calc-stat-label">Total Trade Capital Required:</span>
+                  <span id="out-total-value" class="calc-stat-value">₹5,12,050.00</span>
+                </div>
+
+                <div class="calc-stat-row">
+                  <span class="calc-stat-label">Per Share Risk (Stop Distance):</span>
+                  <span id="out-stop-distance" class="calc-stat-value">₹25.00 (1.02%)</span>
+                </div>
+
+                <div class="calc-stat-row">
+                  <span class="calc-stat-label">Potential Gross Profit:</span>
+                  <span id="out-potential-profit" class="calc-stat-value" style="color: var(--emerald);">+₹12,540.00 (+2.39%)</span>
+                </div>
+              </div>
+
+              <div style="background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.15); border-radius: 12px; padding: 12px; margin-top: 14px;">
+                <span style="font-size: 11px; color: var(--emerald); font-weight: 600; display: block; margin-bottom: 2px;">
+                  ✓ Risk Discipline Protocol Passed
+                </span>
+                <span style="font-size: 10px; color: var(--text-muted);">
+                  Risk per trade is strictly capped at 1.0% of your current total equity.
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================================================
              SCREEN 2: ADD TRADE FORM
              ========================================================= -->
         <div id="page-add-trade" class="page-view">
@@ -272,12 +432,15 @@
               <div class="form-field">
                 <label class="field-label">Trading Pair</label>
                 <select id="inp-pair" class="field-select">
+                  <option value="RELIANCE">RELIANCE (NSE)</option>
+                  <option value="NIFTY 50">NIFTY 50</option>
+                  <option value="BANKNIFTY">BANKNIFTY</option>
+                  <option value="BTC/INR">BTC/INR</option>
+                  <option value="ETH/INR">ETH/INR</option>
+                  <option value="SOL/INR">SOL/INR</option>
+                  <option value="USD/INR">USD/INR</option>
                   <option value="BTC/USD">BTC/USD</option>
                   <option value="ETH/USD">ETH/USD</option>
-                  <option value="SOL/USD">SOL/USD</option>
-                  <option value="XRP/USD">XRP/USD</option>
-                  <option value="EUR/USD">EUR/USD</option>
-                  <option value="GBP/USD">GBP/USD</option>
                 </select>
               </div>
 
@@ -293,16 +456,16 @@
 
             <div class="form-row-3">
               <div class="form-field">
-                <label class="field-label">Entry Price</label>
-                <input type="text" id="inp-entry" class="field-input" value="112,450" required style="font-family: var(--font-mono);">
+                <label class="field-label">Entry Price (<span class="currency-symbol">₹</span>)</label>
+                <input type="text" id="inp-entry" class="field-input" value="2,450.00" required style="font-family: var(--font-mono);">
               </div>
               <div class="form-field">
-                <label class="field-label">Exit Price</label>
-                <input type="text" id="inp-exit" class="field-input" value="113,120" required style="font-family: var(--font-mono);">
+                <label class="field-label">Exit Price (<span class="currency-symbol">₹</span>)</label>
+                <input type="text" id="inp-exit" class="field-input" value="2,510.00" required style="font-family: var(--font-mono);">
               </div>
               <div class="form-field">
-                <label class="field-label">Profit / Loss (USD)</label>
-                <input type="number" step="any" id="inp-pnl" class="field-input" value="240" required style="font-family: var(--font-mono);">
+                <label class="field-label">Profit / Loss (<span class="currency-symbol">₹</span>)</label>
+                <input type="number" step="any" id="inp-pnl" class="field-input" value="24000" required style="font-family: var(--font-mono);">
               </div>
             </div>
 
@@ -321,9 +484,10 @@
               <div class="form-field">
                 <label class="field-label">Trading Session</label>
                 <select id="inp-session" class="field-select">
-                  <option value="London">London</option>
-                  <option value="New York">New York</option>
-                  <option value="Asia">Asia</option>
+                  <option value="NSE Morning">NSE Morning (9:15 AM - 12:00 PM)</option>
+                  <option value="NSE Afternoon">NSE Afternoon (12:00 PM - 3:30 PM)</option>
+                  <option value="London">London (1:30 PM IST)</option>
+                  <option value="New York">New York (7:00 PM IST)</option>
                 </select>
               </div>
               <div class="form-field">
@@ -343,7 +507,7 @@
                 <label class="field-label">Notes</label>
                 <span id="char-count" style="font-size: 11px; font-family: var(--font-mono); color: var(--text-dim);">62/200</span>
               </div>
-              <textarea id="inp-notes" class="field-textarea" rows="3" maxlength="200" oninput="updateCharCount(this)" style="resize: none;">EMA 50 breakout with strong volume. Retest and continuation.</textarea>
+              <textarea id="inp-notes" class="field-textarea" rows="3" maxlength="200" oninput="updateCharCount(this)" style="resize: none;">Clean 15m breakout above day high with strong volume expansion.</textarea>
             </div>
 
             <div class="form-field">
@@ -403,10 +567,11 @@
 
               <select id="hist-filter-pair" class="filter-select-box" onchange="filterHistory()">
                 <option value="ALL">All Pairs</option>
-                <option value="BTC/USD">BTC/USD</option>
-                <option value="ETH/USD">ETH/USD</option>
-                <option value="SOL/USD">SOL/USD</option>
-                <option value="XRP/USD">XRP/USD</option>
+                <option value="RELIANCE">RELIANCE</option>
+                <option value="NIFTY 50">NIFTY 50</option>
+                <option value="BANKNIFTY">BANKNIFTY</option>
+                <option value="BTC/INR">BTC/INR</option>
+                <option value="ETH/INR">ETH/INR</option>
               </select>
 
               <select id="hist-filter-dir" class="filter-select-box" onchange="filterHistory()">
@@ -431,7 +596,7 @@
                   <th>DATE</th>
                   <th>PAIR</th>
                   <th>DIRECTION</th>
-                  <th>P/L</th>
+                  <th>P/L (<span class="currency-symbol">₹</span>)</th>
                   <th>R:R</th>
                   <th>STRATEGY</th>
                   <th style="text-align: right;">ACTION</th>
@@ -503,7 +668,7 @@
             <div class="metric-card">
               <div class="metric-header"><span>Net Profit %</span></div>
               <div id="analytics-net-pct" class="metric-val green">+10.4%</div>
-              <div id="analytics-net-amount" class="metric-footer green">+$490.00</div>
+              <div id="analytics-net-amount" class="metric-footer green">+₹49,000.00</div>
             </div>
 
             <div class="metric-card">
@@ -520,16 +685,14 @@
             <!-- Equity Curve Chart -->
             <div class="chart-card">
               <div class="chart-title-bar">
-                <h3 class="chart-heading">Equity Curve</h3>
+                <h3 class="chart-heading">Equity Curve (<span class="currency-symbol">₹</span>)</h3>
                 <select class="chart-dropdown">
                   <option>This Month</option>
                   <option>All Time</option>
                 </select>
               </div>
               <div class="svg-chart-container">
-                <svg id="equity-curve-svg" viewBox="0 0 450 180">
-                  <!-- Dynamically Rendered SVG -->
-                </svg>
+                <svg id="equity-curve-svg" viewBox="0 0 450 180"></svg>
               </div>
               <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); padding: 0 16px; margin-top: 6px;">
                 <span>1</span><span>5</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30</span>
@@ -539,16 +702,14 @@
             <!-- Monthly P/L Bar Chart -->
             <div class="chart-card">
               <div class="chart-title-bar">
-                <h3 class="chart-heading">Monthly P/L</h3>
+                <h3 class="chart-heading">Monthly P/L (<span class="currency-symbol">₹</span>)</h3>
                 <select class="chart-dropdown">
                   <option>This Year</option>
                   <option>Last Year</option>
                 </select>
               </div>
               <div class="svg-chart-container">
-                <svg id="monthly-bars-svg" viewBox="0 0 450 180">
-                  <!-- Dynamically Rendered SVG -->
-                </svg>
+                <svg id="monthly-bars-svg" viewBox="0 0 450 180"></svg>
               </div>
               <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-dim); font-family: var(--font-mono); padding: 0 8px; margin-top: 6px;">
                 <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
@@ -561,23 +722,23 @@
           <div class="summary-cards-4">
             <div class="sum-card">
               <div class="sum-label">Best Day</div>
-              <div id="sum-best-day" class="sum-val green">+$820.00</div>
+              <div id="sum-best-day" class="sum-val green">+₹82,000.00</div>
               <div id="sum-best-day-sub" class="sum-sub">18 Aug 2026</div>
             </div>
             <div class="sum-card">
               <div class="sum-label">Worst Day</div>
-              <div id="sum-worst-day" class="sum-val red">-$410.00</div>
+              <div id="sum-worst-day" class="sum-val red">-₹41,000.00</div>
               <div id="sum-worst-day-sub" class="sum-sub">11 Aug 2026</div>
             </div>
             <div class="sum-card">
               <div class="sum-label">Best Trade</div>
-              <div id="sum-best-trade" class="sum-val green">+$380.00</div>
-              <div id="sum-best-trade-sub" class="sum-sub">BTC/USD • 1 Sep 2026</div>
+              <div id="sum-best-trade" class="sum-val green">+₹38,000.00</div>
+              <div id="sum-best-trade-sub" class="sum-sub">RELIANCE • 1 Sep 2026</div>
             </div>
             <div class="sum-card">
               <div class="sum-label">Worst Trade</div>
-              <div id="sum-worst-trade" class="sum-val red">-$200.00</div>
-              <div id="sum-worst-trade-sub" class="sum-sub">ETH/USD • 28 Aug 2026</div>
+              <div id="sum-worst-trade" class="sum-val red">-₹20,000.00</div>
+              <div id="sum-worst-trade-sub" class="sum-sub">NIFTY 50 • 28 Aug 2026</div>
             </div>
           </div>
 
@@ -591,7 +752,7 @@
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
             <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF;">Trading Calendar — September 2026</h1>
             <span id="calendar-monthly-badge" style="font-size: 12px; font-family: var(--font-mono); color: var(--emerald); background: rgba(34, 197, 94, 0.1); padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(34, 197, 94, 0.2);">
-              Monthly PnL: +$1,240.00
+              Monthly PnL: +₹1,24,000.00
             </span>
           </div>
           <div id="calendar-view-grid" class="panel-card" style="padding: 24px;"></div>
@@ -609,8 +770,8 @@
               <input type="text" id="set-trader-name" value="Rajiv Gowda" class="field-input">
             </div>
             <div class="form-field" style="margin-bottom: 14px;">
-              <label class="field-label">Initial Starting Balance ($)</label>
-              <input type="number" id="set-starting-balance" value="5000" class="field-input" style="font-family: var(--font-mono);">
+              <label class="field-label">Initial Starting Balance (<span class="currency-symbol">₹</span>)</label>
+              <input type="number" id="set-starting-balance" value="500000" class="field-input" style="font-family: var(--font-mono);">
             </div>
             <div class="form-field" style="margin-bottom: 20px;">
               <label class="field-label">Max Risk Per Trade (%)</label>
@@ -638,9 +799,7 @@
         Switch profile or sign in with another trading journal profile.
       </p>
 
-      <div id="modal-accounts-grid" class="user-select-grid">
-        <!-- Dynamically Rendered -->
-      </div>
+      <div id="modal-accounts-grid" class="user-select-grid"></div>
 
       <div style="display: flex; gap: 10px; margin-top: 16px;">
         <button class="btn-reset-filters" style="flex: 1; padding: 10px; font-weight: 600;" onclick="openNewAccountModal()">
@@ -661,7 +820,7 @@
         <button onclick="closeNewUserModal()" style="background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 18px;">✕</button>
       </div>
       <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
-        Set up a new isolated workspace with custom starting balance.
+        Set up a new isolated workspace with custom starting balance in Rupees (₹).
       </p>
 
       <form onsubmit="createNewTraderHandler(event)">
@@ -670,8 +829,8 @@
           <input type="text" id="new-user-name" class="field-input" placeholder="e.g. Alex Rivera" required>
         </div>
         <div class="form-field" style="margin-bottom: 16px;">
-          <label class="field-label">Starting Account Balance ($)</label>
-          <input type="number" id="new-user-balance" class="field-input" placeholder="10000" value="10000" required style="font-family: var(--font-mono);">
+          <label class="field-label">Starting Account Balance (<span class="currency-symbol">₹</span>)</label>
+          <input type="number" id="new-user-balance" class="field-input" placeholder="500000" value="500000" required style="font-family: var(--font-mono);">
         </div>
         <button type="submit" class="btn-save-full" style="margin: 0;">
           Create &amp; Log In
@@ -690,37 +849,66 @@
   </div>
 
   <!-- =========================================================================
-       DYNAMIC STATE ENGINE WITH MULTI-USER STORAGE & ACCURATE CALCULATIONS
+       DYNAMIC STATE ENGINE WITH INR CURRENCY & REAL-TIME CALCULATOR
        ========================================================================= -->
   <script>
-    // Master Multi-User Database
+    // Currency State
+    let currentCurrency = localStorage.getItem('tradejournal_currency') || 'INR';
+    const CURRENCY_SYMBOLS = {
+      'INR': '₹',
+      'USD': '$'
+    };
+
+    function formatMoney(amount, showSign = false) {
+      const sym = CURRENCY_SYMBOLS[currentCurrency] || '₹';
+      const absVal = Math.abs(amount).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      if (showSign) {
+        return `${amount >= 0 ? '+' : '-'}${sym}${absVal}`;
+      }
+      return `${amount < 0 ? '-' : ''}${sym}${absVal}`;
+    }
+
+    function setCurrency(curr) {
+      currentCurrency = curr;
+      localStorage.setItem('tradejournal_currency', curr);
+      
+      document.getElementById('btn-curr-inr').classList.toggle('active', curr === 'INR');
+      document.getElementById('btn-curr-usd').classList.toggle('active', curr === 'USD');
+
+      document.querySelectorAll('.currency-symbol').forEach(el => el.innerText = CURRENCY_SYMBOLS[curr]);
+      refreshUI();
+      runCalculator();
+      showToast(`Currency switched to ${curr === 'INR' ? 'Indian Rupees (₹)' : 'US Dollars ($)'}`);
+    }
+
+    // Master Database in INR
     const DEFAULT_ACCOUNTS = [
       {
         id: 'rajiv',
         name: 'Rajiv Gowda',
         avatar: 'R',
-        startingBalance: 5000,
+        startingBalance: 500000,
         trades: [
-          { id: 1, pair: 'BTC/USD', dir: 'LONG', pnl: 240.00, rr: '1 : 2.4', date: '3 Sep 2026', strat: 'EMA Breakout', entry: '112,450', exit: '113,120' },
-          { id: 2, pair: 'ETH/USD', dir: 'SHORT', pnl: -120.00, rr: '1 : 1.1', date: '2 Sep 2026', strat: 'Break & Retest', entry: '4,450', exit: '4,485' },
-          { id: 3, pair: 'BTC/USD', dir: 'LONG', pnl: 380.00, rr: '1 : 3.2', date: '1 Sep 2026', strat: 'EMA Breakout', entry: '110,200', exit: '111,500' },
-          { id: 4, pair: 'SOL/USD', dir: 'LONG', pnl: -60.00, rr: '1 : 0.8', date: '31 Aug 2026', strat: 'Support Bounce', entry: '198.50', exit: '196.20' },
-          { id: 5, pair: 'XRP/USD', dir: 'SHORT', pnl: 150.00, rr: '1 : 1.9', date: '30 Aug 2026', strat: 'Trend Continuation', entry: '0.6250', exit: '0.6120' },
-          { id: 6, pair: 'BTC/USD', dir: 'LONG', pnl: 210.00, rr: '1 : 2.1', date: '29 Aug 2026', strat: 'EMA Breakout', entry: '109,100', exit: '109,800' },
-          { id: 7, pair: 'ETH/USD', dir: 'SHORT', pnl: -200.00, rr: '1 : 1.3', date: '28 Aug 2026', strat: 'Reversal', entry: '4,520', exit: '4,580' },
-          { id: 8, pair: 'BTC/USD', dir: 'LONG', pnl: 820.00, rr: '1 : 3.5', date: '18 Aug 2026', strat: 'EMA Breakout', entry: '105,000', exit: '107,200' },
-          { id: 9, pair: 'SOL/USD', dir: 'SHORT', pnl: -410.00, rr: '1 : 1.0', date: '11 Aug 2026', strat: 'Break & Retest', entry: '202.00', exit: '208.50' }
+          { id: 1, pair: 'RELIANCE', dir: 'LONG', pnl: 24000.00, rr: '1 : 2.4', date: '3 Sep 2026', strat: 'EMA Breakout', entry: '2,450.00', exit: '2,510.00' },
+          { id: 2, pair: 'NIFTY 50', dir: 'SHORT', pnl: -12000.00, rr: '1 : 1.1', date: '2 Sep 2026', strat: 'Break & Retest', entry: '24,850.00', exit: '24,910.00' },
+          { id: 3, pair: 'BANKNIFTY', dir: 'LONG', pnl: 38000.00, rr: '1 : 3.2', date: '1 Sep 2026', strat: 'EMA Breakout', entry: '51,200.00', exit: '51,680.00' },
+          { id: 4, pair: 'TCS', dir: 'LONG', pnl: -6000.00, rr: '1 : 0.8', date: '31 Aug 2026', strat: 'Support Bounce', entry: '4,250.00', exit: '4,220.00' },
+          { id: 5, pair: 'INFY', dir: 'SHORT', pnl: 15000.00, rr: '1 : 1.9', date: '30 Aug 2026', strat: 'Trend Continuation', entry: '1,820.00', exit: '1,795.00' },
+          { id: 6, pair: 'HDFCBANK', dir: 'LONG', pnl: 21000.00, rr: '1 : 2.1', date: '29 Aug 2026', strat: 'EMA Breakout', entry: '1,640.00', exit: '1,675.00' },
+          { id: 7, pair: 'ICICIBANK', dir: 'SHORT', pnl: -20000.00, rr: '1 : 1.3', date: '28 Aug 2026', strat: 'Reversal', entry: '1,220.00', exit: '1,245.00' },
+          { id: 8, pair: 'RELIANCE', dir: 'LONG', pnl: 82000.00, rr: '1 : 3.5', date: '18 Aug 2026', strat: 'EMA Breakout', entry: '2,380.00', exit: '2,485.00' },
+          { id: 9, pair: 'TATAMOTORS', dir: 'SHORT', pnl: -41000.00, rr: '1 : 1.0', date: '11 Aug 2026', strat: 'Break & Retest', entry: '1,050.00', exit: '1,092.00' }
         ]
       },
       {
         id: 'alex',
         name: 'Alex Rivera (Friend)',
         avatar: 'A',
-        startingBalance: 10000,
+        startingBalance: 1000000,
         trades: [
-          { id: 101, pair: 'EUR/USD', dir: 'LONG', pnl: 450.00, rr: '1 : 2.5', date: '3 Sep 2026', strat: 'Trend Continuation', entry: '1.0850', exit: '1.0920' },
-          { id: 102, pair: 'GBP/USD', dir: 'SHORT', pnl: 310.00, rr: '1 : 2.0', date: '2 Sep 2026', strat: 'Reversal', entry: '1.2750', exit: '1.2690' },
-          { id: 103, pair: 'BTC/USD', dir: 'LONG', pnl: -150.00, rr: '1 : 1.2', date: '1 Sep 2026', strat: 'Support Bounce', entry: '111,000', exit: '110,600' }
+          { id: 101, pair: 'NIFTY 50', dir: 'LONG', pnl: 45000.00, rr: '1 : 2.5', date: '3 Sep 2026', strat: 'Trend Continuation', entry: '24,800.00', exit: '24,980.00' },
+          { id: 102, pair: 'BANKNIFTY', dir: 'SHORT', pnl: 31000.00, rr: '1 : 2.0', date: '2 Sep 2026', strat: 'Reversal', entry: '51,400.00', exit: '51,120.00' },
+          { id: 103, pair: 'RELIANCE', dir: 'LONG', pnl: -15000.00, rr: '1 : 1.2', date: '1 Sep 2026', strat: 'Support Bounce', entry: '2,460.00', exit: '2,440.00' }
         ]
       }
     ];
@@ -738,28 +926,24 @@
       localStorage.setItem('tradejournal_active_id', currentAccountId);
     }
 
-    // Comprehensive Dynamic Metrics Engine
+    // Dynamic Metrics Engine
     function calculateMetrics() {
       const user = getActiveAccount();
       const trades = user.trades;
       const starting = user.startingBalance;
 
-      // Cumulative P/L
       const totalPnl = trades.reduce((acc, t) => acc + t.pnl, 0);
       const currentBalance = starting + totalPnl;
       const totalReturnPct = ((totalPnl / starting) * 100).toFixed(1);
 
-      // Today's P/L (trades logged on 3 Sep or today)
       const todayTrades = trades.filter(t => t.date.includes('3 Sep') || t.date === 'Today');
       const todayPnl = todayTrades.reduce((acc, t) => acc + t.pnl, 0);
       const todayPct = ((todayPnl / starting) * 100).toFixed(2);
 
-      // Win Rate & R:R
       const wins = trades.filter(t => t.pnl > 0).length;
       const total = trades.length || 1;
       const winRate = Math.round((wins / total) * 100);
 
-      // Best/Worst stats
       let bestTrade = trades.length ? trades.reduce((max, t) => t.pnl > max.pnl ? t : max, trades[0]) : { pnl: 0, pair: 'N/A', date: 'N/A' };
       let worstTrade = trades.length ? trades.reduce((min, t) => t.pnl < min.pnl ? t : min, trades[0]) : { pnl: 0, pair: 'N/A', date: 'N/A' };
 
@@ -778,52 +962,48 @@
       };
     }
 
-    // Refresh All UI Elements Across the Active Page
+    // Refresh UI
     function refreshUI() {
       const user = getActiveAccount();
       const m = calculateMetrics();
 
-      // Topbar & Sidebar Profile
       document.getElementById('active-trader-badge').innerText = `Active Profile: ${user.name}`;
       document.getElementById('welcome-heading').innerText = `Welcome back, ${user.name.split(' ')[0]} 👋`;
       document.getElementById('top-avatar-circle').innerText = user.avatar || user.name[0];
       
-      // Sidebar balance
-      document.getElementById('side-balance-val').innerText = `$${m.currentBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('side-balance-val').innerText = formatMoney(m.currentBalance);
       document.getElementById('side-balance-change').innerText = `${m.totalReturnPct >= 0 ? '+' : ''}${m.totalReturnPct}%`;
 
-      // Dashboard KPI Strip
       const todayPnlEl = document.getElementById('dash-today-pnl');
       todayPnlEl.className = `metric-val ${m.todayPnl >= 0 ? 'green' : 'red'}`;
-      todayPnlEl.innerText = `${m.todayPnl >= 0 ? '+' : ''}$${Math.abs(m.todayPnl).toFixed(2)}`;
+      todayPnlEl.innerText = formatMoney(m.todayPnl, true);
       document.getElementById('dash-today-percent').innerText = `${m.todayPct >= 0 ? '+' : ''}${m.todayPct}%`;
 
-      document.getElementById('dash-balance').innerText = `$${m.currentBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      document.getElementById('dash-balance').innerText = formatMoney(m.currentBalance);
       document.getElementById('dash-balance-change').innerText = `${m.totalReturnPct >= 0 ? '+' : ''}${m.totalReturnPct}%`;
 
       document.getElementById('dash-winrate-val').innerText = `${m.winRate}%`;
       document.getElementById('dash-trades-count').innerText = `${m.wins} of ${m.total} trades`;
       document.getElementById('dash-winrate-ring').style.strokeDasharray = `${m.winRate}, 100`;
 
-      // Analytics KPI Strip
+      // Analytics
       document.getElementById('analytics-winrate-val').innerText = `${m.winRate}%`;
       document.getElementById('analytics-winrate-sub').innerText = `${m.wins} of ${m.total} trades`;
       document.getElementById('analytics-winrate-ring').style.strokeDasharray = `${m.winRate}, 100`;
       document.getElementById('analytics-total-trades').innerText = m.total;
       document.getElementById('analytics-net-pct').innerText = `${m.totalReturnPct >= 0 ? '+' : ''}${m.totalReturnPct}%`;
-      document.getElementById('analytics-net-amount').innerText = `${m.totalPnl >= 0 ? '+' : ''}$${Math.abs(m.totalPnl).toFixed(2)}`;
+      document.getElementById('analytics-net-amount').innerText = formatMoney(m.totalPnl, true);
 
-      // Best / Worst Summary
-      document.getElementById('sum-best-trade').innerText = `+$${Math.abs(m.bestTrade.pnl).toFixed(2)}`;
+      document.getElementById('sum-best-trade').innerText = formatMoney(m.bestTrade.pnl, true);
       document.getElementById('sum-best-trade-sub').innerText = `${m.bestTrade.pair} • ${m.bestTrade.date}`;
-      document.getElementById('sum-worst-trade').innerText = `-$${Math.abs(m.worstTrade.pnl).toFixed(2)}`;
+      document.getElementById('sum-worst-trade').innerText = formatMoney(m.worstTrade.pnl, false);
       document.getElementById('sum-worst-trade-sub').innerText = `${m.worstTrade.pair} • ${m.worstTrade.date}`;
 
-      // Settings inputs
+      // Set input defaults
       document.getElementById('set-trader-name').value = user.name;
       document.getElementById('set-starting-balance').value = user.startingBalance;
+      document.getElementById('calc-account-bal').value = m.currentBalance;
 
-      // Render Tables & Dynamic Charts
       renderDashboardTable();
       renderHistoryTable(user.trades);
       renderDynamicEquityChart();
@@ -833,7 +1013,58 @@
       renderModalAccountsList();
     }
 
-    // Render Recent Trades Table on Dashboard
+    // Position Size & Risk Calculator Engine
+    function runCalculator() {
+      const balance = parseFloat(document.getElementById('calc-account-bal').value) || 100000;
+      const riskPct = parseFloat(document.getElementById('calc-risk-pct').value) || 1.0;
+      const entry = parseFloat(document.getElementById('calc-entry-price').value) || 100;
+      const sl = parseFloat(document.getElementById('calc-stop-loss').value) || 98;
+      const target = parseFloat(document.getElementById('calc-target-price').value) || 105;
+
+      const riskAmount = (balance * (riskPct / 100));
+      const stopDistance = Math.abs(entry - sl) || 0.01;
+      const rewardDistance = Math.abs(target - entry) || 0.01;
+      
+      const qty = Math.floor(riskAmount / stopDistance) || 1;
+      const totalTradeValue = qty * entry;
+      const potentialProfit = qty * rewardDistance;
+      const rrRatio = (rewardDistance / stopDistance).toFixed(1);
+
+      document.getElementById('out-risk-amount').innerText = formatMoney(riskAmount);
+      document.getElementById('out-qty').innerText = `${qty.toLocaleString('en-IN')} Units / Shares`;
+      document.getElementById('out-total-value').innerText = formatMoney(totalTradeValue);
+      document.getElementById('out-stop-distance').innerText = `${formatMoney(stopDistance)} (${((stopDistance/entry)*100).toFixed(2)}%)`;
+      document.getElementById('out-potential-profit').innerText = `+${formatMoney(potentialProfit)} (+${((potentialProfit/balance)*100).toFixed(2)}%)`;
+      document.getElementById('calc-rr-badge').innerText = `R:R 1 : ${rrRatio}`;
+    }
+
+    function applyCalcToAddTrade() {
+      const instrument = document.getElementById('calc-instrument').value;
+      const entry = document.getElementById('calc-entry-price').value;
+      const sl = parseFloat(document.getElementById('calc-stop-loss').value) || 0;
+      const target = parseFloat(document.getElementById('calc-target-price').value) || 0;
+      const dir = target > sl ? 'LONG' : 'SHORT';
+
+      const balance = parseFloat(document.getElementById('calc-account-bal').value) || 100000;
+      const riskPct = parseFloat(document.getElementById('calc-risk-pct').value) || 1.0;
+      const stopDist = Math.abs(entry - sl) || 1;
+      const rewardDist = Math.abs(target - entry) || 1;
+      const qty = Math.floor((balance * (riskPct / 100)) / stopDist) || 1;
+      const profitVal = qty * rewardDist;
+      const rr = (rewardDist / stopDist).toFixed(1);
+
+      document.getElementById('inp-pair').value = instrument.includes('/') ? instrument : (instrument === 'RELIANCE' ? 'RELIANCE' : 'NIFTY 50');
+      selectDirection(dir);
+      document.getElementById('inp-entry').value = entry;
+      document.getElementById('inp-exit').value = target;
+      document.getElementById('inp-pnl').value = profitVal;
+      document.getElementById('inp-rr').value = `1 : ${rr}` in { '1 : 2.4':1, '1 : 2.1':1, '1 : 3.2':1, '1 : 1.5':1, '1 : 1.1':1, '1 : 0.8':1 } ? `1 : ${rr}` : '1 : 2.4';
+
+      showToast(`Applied position calculation (${qty} shares, ${formatMoney(profitVal)} profit) to form!`, 'success');
+      navigateTo('add-trade');
+    }
+
+    // Dashboard Recent Table
     function renderDashboardTable() {
       const tbody = document.getElementById('recent-tbody');
       const trades = getActiveAccount().trades.slice(0, 5);
@@ -846,7 +1077,7 @@
           <tr>
             <td style="font-weight: 700;">${t.pair}</td>
             <td><span class="${isLong ? 'badge-long' : 'badge-short'}">${isLong ? 'Long' : 'Short'}</span></td>
-            <td class="${isPos ? 'pnl-pos' : 'pnl-neg'}">${isPos ? '+' : ''}$${Math.abs(t.pnl).toFixed(2)}</td>
+            <td class="${isPos ? 'pnl-pos' : 'pnl-neg'}">${formatMoney(t.pnl, true)}</td>
             <td>${t.rr}</td>
             <td style="color: var(--text-muted);">${t.date}</td>
             <td style="text-align: right; color: var(--text-dim); cursor: pointer;" onclick="showToast('Inspecting ${t.pair} trade retrospective')">∿  ⋮</td>
@@ -855,7 +1086,7 @@
       }).join('');
     }
 
-    // Render History Table
+    // History Table
     function renderHistoryTable(items) {
       const tbody = document.getElementById('history-tbody');
       const count = document.getElementById('history-count-text');
@@ -876,7 +1107,7 @@
             <td style="color: var(--text-muted);">${t.date}</td>
             <td style="font-weight: 700;">${t.pair}</td>
             <td><span class="${isLong ? 'badge-long' : 'badge-short'}">${isLong ? 'Long' : 'Short'}</span></td>
-            <td class="${isPos ? 'pnl-pos' : 'pnl-neg'}">${isPos ? '+' : ''}$${Math.abs(t.pnl).toFixed(2)}</td>
+            <td class="${isPos ? 'pnl-pos' : 'pnl-neg'}">${formatMoney(t.pnl, true)}</td>
             <td>${t.rr}</td>
             <td style="font-family: var(--font-sans);">${t.strat}</td>
             <td style="text-align: right; color: var(--text-dim); cursor: pointer;" onclick="showToast('Viewing details for ${t.pair}')">&gt;</td>
@@ -885,7 +1116,7 @@
       }).join('');
     }
 
-    // Dynamic Equity Curve SVG Generator
+    // Equity Curve SVG
     function renderDynamicEquityChart() {
       const svg = document.getElementById('equity-curve-svg');
       if (!svg) return;
@@ -905,7 +1136,7 @@
 
       const w = 400;
       const h = 130;
-      const leftPad = 40;
+      const leftPad = 50;
       const topPad = 25;
 
       const coords = points.map((val, idx) => {
@@ -916,6 +1147,7 @@
 
       const pathD = coords.reduce((acc, pt, i) => i === 0 ? `M ${pt.x} ${pt.y}` : `${acc} L ${pt.x} ${pt.y}`, '');
       const areaD = `${pathD} L ${coords[coords.length - 1].x} ${topPad + h} L ${coords[0].x} ${topPad + h} Z`;
+      const sym = CURRENCY_SYMBOLS[currentCurrency];
 
       svg.innerHTML = `
         <defs>
@@ -928,40 +1160,42 @@
         <line x1="30" y1="75" x2="440" y2="75" stroke="#1E293B" stroke-dasharray="3 3"/>
         <line x1="30" y1="120" x2="440" y2="120" stroke="#1E293B" stroke-dasharray="3 3"/>
         <line x1="30" y1="165" x2="440" y2="165" stroke="#1E293B" stroke-dasharray="3 3"/>
-        <text x="5" y="34" fill="#64748B" font-size="9" font-family="monospace">$${Math.round(maxVal/1000)}K</text>
-        <text x="5" y="169" fill="#64748B" font-size="9" font-family="monospace">$${Math.round(minVal/1000)}K</text>
+        <text x="5" y="34" fill="#64748B" font-size="9" font-family="monospace">${sym}${Math.round(maxVal/1000)}K</text>
+        <text x="5" y="169" fill="#64748B" font-size="9" font-family="monospace">${sym}${Math.round(minVal/1000)}K</text>
         <path d="${areaD}" fill="url(#eqDynamicGrad)"/>
         <path d="${pathD}" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
         <circle cx="${coords[coords.length - 1].x}" cy="${coords[coords.length - 1].y}" r="4" fill="#FFFFFF" stroke="#22C55E" stroke-width="2"/>
       `;
     }
 
-    // Dynamic Monthly P/L Bar SVG Generator
+    // Monthly Bars SVG
     function renderDynamicMonthlyBars() {
       const svg = document.getElementById('monthly-bars-svg');
       if (!svg) return;
 
+      const sym = CURRENCY_SYMBOLS[currentCurrency];
+      const factor = currentCurrency === 'INR' ? 100 : 1;
       const months = [
-        { m: 'Jan', pnl: 50 }, { m: 'Feb', pnl: 80 }, { m: 'Mar', pnl: -120 },
-        { m: 'Apr', pnl: 180 }, { m: 'May', pnl: -200 }, { m: 'Jun', pnl: 120 },
-        { m: 'Jul', pnl: 240 }, { m: 'Aug', pnl: 540 }, { m: 'Sep', pnl: 820 },
-        { m: 'Oct', pnl: -410 }, { m: 'Nov', pnl: 20 }, { m: 'Dec', pnl: -10 }
+        { m: 'Jan', pnl: 50 * factor }, { m: 'Feb', pnl: 80 * factor }, { m: 'Mar', pnl: -120 * factor },
+        { m: 'Apr', pnl: 180 * factor }, { m: 'May', pnl: -200 * factor }, { m: 'Jun', pnl: 120 * factor },
+        { m: 'Jul', pnl: 240 * factor }, { m: 'Aug', pnl: 540 * factor }, { m: 'Sep', pnl: 820 * factor },
+        { m: 'Oct', pnl: -410 * factor }, { m: 'Nov', pnl: 20 * factor }, { m: 'Dec', pnl: -10 * factor }
       ];
 
       const zeroY = 90;
       let barsSvg = `
         <line x1="30" y1="${zeroY}" x2="440" y2="${zeroY}" stroke="#334155" stroke-width="1.5"/>
-        <text x="5" y="28" fill="#64748B" font-size="9" font-family="monospace">$1K</text>
-        <text x="5" y="58" fill="#64748B" font-size="9" font-family="monospace">$500</text>
-        <text x="5" y="94" fill="#64748B" font-size="9" font-family="monospace">$0</text>
-        <text x="5" y="130" fill="#64748B" font-size="9" font-family="monospace">-$500</text>
-        <text x="5" y="165" fill="#64748B" font-size="9" font-family="monospace">-$1K</text>
+        <text x="5" y="28" fill="#64748B" font-size="9" font-family="monospace">${sym}${currentCurrency === 'INR' ? '100K' : '1K'}</text>
+        <text x="5" y="58" fill="#64748B" font-size="9" font-family="monospace">${sym}${currentCurrency === 'INR' ? '50K' : '500'}</text>
+        <text x="5" y="94" fill="#64748B" font-size="9" font-family="monospace">${sym}0</text>
+        <text x="5" y="130" fill="#64748B" font-size="9" font-family="monospace">-${sym}${currentCurrency === 'INR' ? '50K' : '500'}</text>
+        <text x="5" y="165" fill="#64748B" font-size="9" font-family="monospace">-${sym}${currentCurrency === 'INR' ? '100K' : '1K'}</text>
       `;
 
       months.forEach((item, i) => {
         const x = 42 + i * 32;
         const isPos = item.pnl >= 0;
-        const barH = Math.min(Math.abs(item.pnl) / 1000 * 75, 75);
+        const barH = Math.min(Math.abs(item.pnl) / (1000 * factor) * 75, 75);
         const y = isPos ? zeroY - barH : zeroY;
         const color = isPos ? '#22C55E' : '#EF4444';
         barsSvg += `<rect x="${x}" y="${y}" width="14" height="${barH}" rx="2" fill="${color}"/>`;
@@ -970,7 +1204,7 @@
       svg.innerHTML = barsSvg;
     }
 
-    // Dynamic Calendar Grid
+    // Calendar
     function renderCalendarView() {
       const container = document.getElementById('calendar-view-grid');
       if (!container) return;
@@ -984,7 +1218,6 @@
       html += `<div style="padding: 14px; border-radius: 12px; background: rgba(8, 13, 26, 0.4); border: 1px solid rgba(30, 41, 59, 0.4); opacity: 0.3;"></div>`;
 
       for (let day = 1; day <= 30; day++) {
-        // Find if user has trades on this day
         const dayTrades = user.trades.filter(t => t.date.includes(`${day} `) || (day === 3 && t.date === 'Today'));
         const dayPnl = dayTrades.reduce((acc, t) => acc + t.pnl, 0);
 
@@ -993,7 +1226,7 @@
 
         if (dayTrades.length > 0) {
           const isPos = dayPnl >= 0;
-          pnlText = `<span style="color: ${isPos ? 'var(--emerald)' : 'var(--red-loss-text)'}; font-weight: 700; display: block; margin-top: 4px;">${isPos ? '+' : ''}$${Math.abs(dayPnl).toFixed(2)}</span><span style="font-size: 10px; color: var(--text-dim);">${dayTrades.length} trade${dayTrades.length > 1 ? 's' : ''}</span>`;
+          pnlText = `<span style="color: ${isPos ? 'var(--emerald)' : 'var(--red-loss-text)'}; font-weight: 700; display: block; margin-top: 4px;">${formatMoney(dayPnl, true)}</span><span style="font-size: 10px; color: var(--text-dim);">${dayTrades.length} trade${dayTrades.length > 1 ? 's' : ''}</span>`;
           borderStyle = isPos ? 'border: 1px solid rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.05);' : 'border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);';
         }
 
@@ -1009,7 +1242,17 @@
       container.innerHTML = html;
     }
 
-    // User Dropdown List
+    // Switch Account
+    function switchAccount(accountId) {
+      currentAccountId = accountId;
+      saveState();
+      refreshUI();
+      runCalculator();
+      closeUserDropdown();
+      showToast(`Switched workspace to ${getActiveAccount().name}`, 'success');
+    }
+
+    // Dropdown list
     function renderUserDropdownList() {
       const list = document.getElementById('dropdown-accounts-list');
       if (!list) return;
@@ -1028,7 +1271,7 @@
       }).join('');
     }
 
-    // Modal Accounts Selection Grid
+    // Modal List
     function renderModalAccountsList() {
       const grid = document.getElementById('modal-accounts-grid');
       if (!grid) return;
@@ -1048,7 +1291,7 @@
               </div>
             </div>
             <div style="text-align: right;">
-              <div style="font-size: 13px; font-weight: 700; font-family: var(--font-mono); color: #FFFFFF;">$${bal.toLocaleString()}</div>
+              <div style="font-size: 13px; font-weight: 700; font-family: var(--font-mono); color: #FFFFFF;">${formatMoney(bal)}</div>
               <div style="font-size: 10px; color: var(--emerald); font-family: var(--font-mono);">Active</div>
             </div>
           </button>
@@ -1056,20 +1299,11 @@
       }).join('');
     }
 
-    // Switch Account Functionality
-    function switchAccount(accountId) {
-      currentAccountId = accountId;
-      saveState();
-      refreshUI();
-      closeUserDropdown();
-      showToast(`Switched workspace to ${getActiveAccount().name}`, 'success');
-    }
-
-    // Create New Trader Account
+    // Create New Trader
     function createNewTraderHandler(e) {
       e.preventDefault();
       const name = document.getElementById('new-user-name').value.trim();
-      const startingBalance = parseFloat(document.getElementById('new-user-balance').value) || 5000;
+      const startingBalance = parseFloat(document.getElementById('new-user-balance').value) || (currentCurrency === 'INR' ? 500000 : 5000);
       if (!name) return;
 
       const newId = 'trader_' + Date.now();
@@ -1085,6 +1319,7 @@
       currentAccountId = newId;
       saveState();
       refreshUI();
+      runCalculator();
       closeNewUserModal();
       showToast(`Welcome ${name}! New workspace initialized.`, 'success');
       navigateTo('dashboard');
@@ -1098,6 +1333,7 @@
       user.startingBalance = parseFloat(document.getElementById('set-starting-balance').value) || user.startingBalance;
       saveState();
       refreshUI();
+      runCalculator();
       showToast('Settings saved successfully', 'success');
     }
 
@@ -1128,6 +1364,7 @@
       user.trades.unshift(newTrade);
       saveState();
       refreshUI();
+      runCalculator();
 
       showToast(`Trade for ${pair} (${dir}) saved successfully!`, 'success');
       navigateTo('dashboard');
@@ -1146,9 +1383,13 @@
       const surface = document.querySelector('.page-surface');
       if (surface) surface.scrollTop = 0;
       closeUserDropdown();
+
+      if (pageId === 'calculator') {
+        runCalculator();
+      }
     }
 
-    // Direction Toggle in Add Trade Form
+    // Direction Toggle
     function selectDirection(dir) {
       document.getElementById('inp-dir').value = dir;
       const btnLong = document.getElementById('btn-dir-long');
@@ -1175,7 +1416,6 @@
       }
     }
 
-    // Filter History
     function filterHistory() {
       const pair = document.getElementById('hist-filter-pair').value;
       const dir = document.getElementById('hist-filter-dir').value;
@@ -1200,7 +1440,7 @@
       renderHistoryTable(getActiveAccount().trades);
     }
 
-    // User Dropdown & Modal Controls
+    // Modal & Dropdown controls
     function toggleUserDropdown(e) {
       e.stopPropagation();
       const menu = document.getElementById('user-dropdown-menu');
@@ -1233,7 +1473,6 @@
       document.getElementById('new-user-modal').classList.remove('open');
     }
 
-    // Toast Alert
     function showToast(msg, type = 'success') {
       const toast = document.getElementById('toast');
       const text = document.getElementById('toast-text');
@@ -1242,9 +1481,10 @@
       setTimeout(() => toast.classList.remove('visible'), 3200);
     }
 
-    // Initialize App
+    // Init
     document.addEventListener('DOMContentLoaded', () => {
-      refreshUI();
+      setCurrency(currentCurrency);
+      runCalculator();
     });
   </script>
 </body>

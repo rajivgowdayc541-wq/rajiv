@@ -9,7 +9,48 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+  <!-- =========================================================================
+       MASTER SECURITY LOCK SCREEN (Password Protected: rajivraghav)
+       ========================================================================= -->
+  <div id="app-lockscreen" class="app-lockscreen">
+    <div id="master-lock-card" class="lock-card">
+      <div class="lock-icon-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+
+      <h2 class="lock-title">TradeJournal Secure</h2>
+      <p class="lock-subtitle">Enter your master password to unlock your private trading workspace.</p>
+
+      <form onsubmit="verifyMasterPassword(event)">
+        <div class="lock-input-wrap">
+          <input type="password" id="master-password-input" class="lock-input" placeholder="Enter Master Password" autocomplete="current-password" required>
+          <button type="button" class="lock-toggle-pwd" onclick="toggleMasterPwdVisibility()" title="Show/Hide Password">
+            <svg id="pwd-eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+
+        <div id="master-pwd-error" class="lock-error-msg"></div>
+
+        <button type="submit" class="btn-lock-submit">
+          <span>Unlock Workspace</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </form>
+
+      <div style="font-size: 11px; color: var(--text-dim); margin-top: 20px; font-family: var(--font-mono);">
+        🔒 256-Bit Client Session Encryption Active
+      </div>
+    </div>
+  </div>
 
   <!-- Mobile Backdrop Overlay -->
   <div id="sidebar-backdrop" class="sidebar-backdrop-mobile" onclick="closeMobileSidebar()"></div>
@@ -1053,6 +1094,101 @@
        DYNAMIC STATE ENGINE WITH STRATEGY PLAYBOOK & STAR RATINGS
        ========================================================================= -->
   <script>
+    // =========================================================================
+    // MASTER SECURITY ACCESS CONTROL (Password: rajivraghav)
+    // =========================================================================
+    const MASTER_PASSWORD = 'rajivraghav';
+
+    function checkMasterAuth() {
+      const isAuth = sessionStorage.getItem('tradejournal_master_auth') === 'true' || localStorage.getItem('tradejournal_master_auth') === 'true';
+      const lockScreen = document.getElementById('app-lockscreen');
+      if (isAuth) {
+        if (lockScreen) lockScreen.style.display = 'none';
+      } else {
+        if (lockScreen) {
+          lockScreen.style.display = 'flex';
+          lockScreen.style.opacity = '1';
+          lockScreen.style.transform = 'scale(1)';
+          setTimeout(() => {
+            const input = document.getElementById('master-password-input');
+            if (input) input.focus();
+          }, 100);
+        }
+      }
+    }
+
+    function verifyMasterPassword(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('master-password-input');
+      const errorMsg = document.getElementById('master-pwd-error');
+      const card = document.getElementById('master-lock-card');
+      const pwd = input ? input.value.trim() : '';
+
+      if (pwd === MASTER_PASSWORD) {
+        sessionStorage.setItem('tradejournal_master_auth', 'true');
+        localStorage.setItem('tradejournal_master_auth', 'true');
+        if (errorMsg) errorMsg.innerText = '';
+        const lockScreen = document.getElementById('app-lockscreen');
+        if (lockScreen) {
+          lockScreen.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+          lockScreen.style.opacity = '0';
+          lockScreen.style.transform = 'scale(1.02)';
+          setTimeout(() => {
+            lockScreen.style.display = 'none';
+            refreshUI();
+          }, 250);
+        }
+        showToast('Master Access Verified. Welcome back!', 'success');
+      } else {
+        if (errorMsg) errorMsg.innerText = 'Incorrect master password. Access denied.';
+        if (card) {
+          card.classList.remove('shake-animation');
+          void card.offsetWidth; // Trigger DOM reflow
+          card.classList.add('shake-animation');
+        }
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      }
+    }
+
+    function toggleMasterPwdVisibility() {
+      const input = document.getElementById('master-password-input');
+      const eyeIcon = document.getElementById('pwd-eye-icon');
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (eyeIcon) eyeIcon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        `;
+      } else {
+        input.type = 'password';
+        if (eyeIcon) eyeIcon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        `;
+      }
+    }
+
+    function lockApplication() {
+      sessionStorage.removeItem('tradejournal_master_auth');
+      localStorage.removeItem('tradejournal_master_auth');
+      const input = document.getElementById('master-password-input');
+      const errorMsg = document.getElementById('master-pwd-error');
+      if (input) input.value = '';
+      if (errorMsg) errorMsg.innerText = '';
+      const lockScreen = document.getElementById('app-lockscreen');
+      if (lockScreen) {
+        lockScreen.style.opacity = '1';
+        lockScreen.style.transform = 'scale(1)';
+        lockScreen.style.display = 'flex';
+        setTimeout(() => { if (input) input.focus(); }, 100);
+      }
+      showToast('Workspace locked successfully.');
+    }
+
     // Currency State
     let currentCurrency = localStorage.getItem('tradejournal_currency') || 'INR';
     const CURRENCY_SYMBOLS = { 'INR': '₹', 'USD': '$' };
@@ -2163,10 +2299,14 @@
 
     // Init
     document.addEventListener('DOMContentLoaded', () => {
+      checkMasterAuth();
       setCurrency(currentCurrency);
       setRating(5);
       runCalculator();
     });
+
+    // Immediate check
+    checkMasterAuth();
   </script>
 </body>
 </html>

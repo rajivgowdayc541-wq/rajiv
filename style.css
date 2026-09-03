@@ -214,9 +214,9 @@ body {
   border-bottom: 1px solid var(--border-card);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 0 32px;
-  gap: 16px;
+  justify-content: space-between;
+  padding: 0 24px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
@@ -226,12 +226,15 @@ body {
   color: var(--text-muted);
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 
 .header-icon-btn:hover {
@@ -242,12 +245,19 @@ body {
 .avatar-circle {
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   border-radius: 50%;
   background: #1E293B;
   border: 1px solid #334155;
   color: #FFFFFF;
   font-weight: 700;
   font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1415,6 +1425,11 @@ body {
 
   .mobile-menu-btn {
     display: flex;
+    flex-shrink: 0;
+  }
+
+  .header-desktop-icon {
+    display: none !important;
   }
 
   .sidebar {
@@ -1433,11 +1448,13 @@ body {
   }
 
   .top-navbar {
-    padding: 0 16px;
+    padding: 0 14px;
+    gap: 8px;
+    justify-content: space-between;
   }
 
   .page-surface {
-    padding: 20px 14px;
+    padding: 20px 14px 40px 14px;
   }
 
   .metrics-row-4 {
@@ -1464,33 +1481,96 @@ body {
 }
 
 @media (max-width: 600px) {
+  #active-trader-badge {
+    display: none !important;
+  }
+
+  .top-navbar {
+    padding: 0 12px;
+    height: 56px;
+  }
+
+  .top-navbar > div:first-child {
+    gap: 8px !important;
+  }
+
+  .curr-btn {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .header-icon-btn, .avatar-circle {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+    border-radius: 8px;
+  }
+
+  .avatar-circle {
+    border-radius: 50%;
+  }
+
+  .page-surface {
+    padding: 16px 14px 60px 14px;
+  }
+
   .dashboard-hero {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+    align-items: stretch;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .dashboard-hero > div:last-child {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .dashboard-hero .btn-calculator,
+  .dashboard-hero .btn-add-trade {
+    flex: 1;
+    justify-content: center;
+    padding: 10px 14px;
+    height: 42px;
+    font-size: 13px;
   }
 
   .metrics-row-4 {
     grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .metric-card {
+    padding: 20px 18px;
+    border-radius: 16px;
+  }
+
+  .metric-val {
+    font-size: 26px;
+    margin: 8px 0 4px 0;
   }
 
   .summary-cards-4 {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .p-key {
-    width: 54px;
-    height: 54px;
+    width: 56px;
+    height: 56px;
     font-size: 20px;
   }
 
   .p-key-zero {
-    width: 120px;
+    width: 124px;
     padding-left: 20px;
   }
 
   .phone-calc-wrapper {
     padding: 16px 12px;
+    border-radius: 28px;
   }
 
   .phone-digits {

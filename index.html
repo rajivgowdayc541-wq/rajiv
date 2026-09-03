@@ -147,8 +147,8 @@
         </div>
       </div>
 
-      <!-- Quick Calculator Button -->
-      <button class="header-icon-btn" onclick="navigateTo('calculator')" title="Open Position Size Calculator">
+      <!-- Quick Calculator Button (Desktop) -->
+      <button class="header-icon-btn header-desktop-icon" onclick="navigateTo('calculator')" title="Open Calculator">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="4" y="2" width="16" height="20" rx="2"></rect>
           <line x1="8" y1="6" x2="16" y2="6"></line>
@@ -162,8 +162,8 @@
         </svg>
       </button>
 
-      <!-- Strategy Notes Button -->
-      <button class="header-icon-btn" onclick="navigateTo('strategies')" title="Strategy Playbook & Rules">
+      <!-- Strategy Notes Button (Desktop) -->
+      <button class="header-icon-btn header-desktop-icon" onclick="navigateTo('strategies')" title="Strategy Playbook & Rules">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
           <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
@@ -215,7 +215,7 @@
               <p class="hero-subtitle">Here's your clean trading workspace. Ready to log your executions.</p>
             </div>
             <div style="display: flex; gap: 10px;">
-              <button class="btn-reset-filters" onclick="navigateTo('calculator')" style="padding: 10px 16px; font-weight: 600;">
+              <button class="btn-reset-filters btn-calculator" onclick="navigateTo('calculator')" style="padding: 10px 16px; font-weight: 600; display: flex; align-items: center; gap: 6px;">
                 🧮 Calculator
               </button>
               <button class="btn-add-trade" onclick="navigateTo('add-trade')">
@@ -223,7 +223,7 @@
                   <line x1="12" y1="5" x2="12" y2="19"></line>
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-                + Add Trade
+                Add Trade
               </button>
             </div>
           </div>

@@ -11,167 +11,137 @@
 </head>
 <body>
 
-  <!-- Top Sticky Navigation & Presentation Mode Switcher -->
-  <header class="top-header">
-    <div class="brand-badge">
-      <div class="brand-icon">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-          <polyline points="16 7 22 7 22 13"></polyline>
-        </svg>
+  <!-- =========================================================================
+       FIXED LEFT SIDEBAR (240px)
+       ========================================================================= -->
+  <aside class="sidebar">
+    <div>
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+            <polyline points="16 7 22 7 22 13"></polyline>
+          </svg>
+        </div>
+        Trade<span>Journal</span>
       </div>
-      <div class="brand-title">Trade<span>Journal</span></div>
+
+      <nav class="sidebar-nav">
+        <button id="nav-dashboard" class="nav-link active" onclick="navigateTo('dashboard')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          Dashboard
+        </button>
+
+        <button id="nav-history" class="nav-link" onclick="navigateTo('history')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 14 14"></polyline>
+          </svg>
+          History
+        </button>
+
+        <button id="nav-analytics" class="nav-link" onclick="navigateTo('analytics')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          Analytics
+        </button>
+
+        <button id="nav-calendar" class="nav-link" onclick="navigateTo('calendar')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Calendar
+        </button>
+
+        <button id="nav-settings" class="nav-link" onclick="navigateTo('settings')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          Settings
+        </button>
+      </nav>
     </div>
 
-    <!-- Mode Selector: 2x2 Canvas vs Interactive Screen Mode -->
-    <div class="nav-mode-switch">
-      <button id="btn-canvas-mode" class="mode-btn active" onclick="switchMainView('canvas')">
+    <div class="sidebar-bottom">
+      <div class="balance-card">
+        <div class="balance-label">Account Balance</div>
+        <div id="side-balance-val" class="balance-amount">$5,240.00</div>
+        <div class="balance-change">+10.4%</div>
+      </div>
+      <button class="logout-btn" onclick="showToast('Logged out session securely')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="7" height="7"></rect>
-          <rect x="14" y="3" width="7" height="7"></rect>
-          <rect x="14" y="14" width="7" height="7"></rect>
-          <rect x="3" y="14" width="7" height="7"></rect>
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
         </svg>
-        4-Screen Canvas
-      </button>
-      <button id="btn-interactive-mode" class="mode-btn" onclick="switchMainView('screen1')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="3" y1="9" x2="21" y2="9"></line>
-          <line x1="9" y1="21" x2="9" y2="9"></line>
-        </svg>
-        Single Screen Full View
+        Logout
       </button>
     </div>
+  </aside>
 
-    <div class="header-user">
-      <button class="icon-btn" onclick="showToast('Notifications: 0 Unread')">
+  <!-- =========================================================================
+       MAIN CONTENT WORKSPACE (Displays Only One Page at a Time)
+       ========================================================================= -->
+  <div class="main-wrapper">
+    
+    <!-- Top Bar -->
+    <header class="top-navbar">
+      <button class="header-icon-btn" onclick="showToast('0 new notifications')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
         </svg>
       </button>
-      <div class="avatar">R</div>
-    </div>
-  </header>
+      <div class="avatar-circle">R</div>
+    </header>
 
-  <!-- =========================================================================
-       1. 2x2 PRESENTATION CANVAS VIEW (Matching Figma Canvas Reference)
-       ========================================================================= -->
-  <main id="view-canvas" class="presentation-container">
-    
-    <div class="canvas-grid-2x2">
-      
-      <!-- =========================================================
-           SCREEN 1: DASHBOARD (Top-Left)
-           ========================================================= -->
-      <div class="screen-card">
+    <div class="page-surface">
+      <div class="page-container">
         
-        <!-- Sidebar -->
-        <div class="screen-sidebar">
-          <div>
-            <div class="sidebar-logo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5">
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                <polyline points="16 7 22 7 22 13"></polyline>
-              </svg>
-              Trade<span>Journal</span>
-            </div>
-
-            <div class="sidebar-nav">
-              <button class="sidebar-item active">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
-                </svg>
-                Dashboard
-              </button>
-              <button class="sidebar-item" onclick="switchMainView('screen3')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 14 14"></polyline>
-                </svg>
-                History
-              </button>
-              <button class="sidebar-item" onclick="switchMainView('screen4')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="18" y1="20" x2="18" y2="10"></line>
-                  <line x1="12" y1="20" x2="12" y2="4"></line>
-                  <line x1="6" y1="20" x2="6" y2="14"></line>
-                </svg>
-                Analytics
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
-                Calendar
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="3"></circle>
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                </svg>
-                Settings
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <div class="sidebar-balance-card">
-              <div class="balance-label">Account Balance</div>
-              <div class="balance-amount">$5,240.00</div>
-              <div class="balance-change">+10.4%</div>
-            </div>
-            <div class="sidebar-logout" onclick="showToast('Logged out session')">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
-              </svg>
-              Logout
-            </div>
-          </div>
-        </div>
-
-        <!-- Main Screen Content -->
-        <div class="screen-main">
+        <!-- =========================================================
+             SCREEN 1: DASHBOARD
+             ========================================================= -->
+        <div id="page-dashboard" class="page-view active-page">
           
-          <div class="screen-header">
-            <div class="screen-title-group">
-              <h1>Welcome back, Rajiv 👋</h1>
-              <p>Here's your trading performance today.</p>
+          <div class="dashboard-hero">
+            <div>
+              <h1 class="hero-title">Welcome back, Rajiv 👋</h1>
+              <p class="hero-subtitle">Here's your trading performance today.</p>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <button class="btn-primary-emerald" onclick="switchMainView('screen2')">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                  <line x1="12" y1="5" x2="12" y2="19"></line>
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-                + Add Trade
-              </button>
-              <div class="avatar" style="width: 28px; height: 28px; font-size: 11px;">R</div>
-            </div>
+            <button class="btn-add-trade" onclick="navigateTo('add-trade')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              + Add Trade
+            </button>
           </div>
 
-          <!-- 4 KPI Cards -->
-          <div class="kpi-grid-4">
+          <!-- 4 Metric Cards -->
+          <div class="metrics-row-4">
             
-            <div class="kpi-card">
-              <div class="kpi-top">
+            <div class="metric-card">
+              <div class="metric-header">
                 <span>Today's P/L</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
                   <polyline points="17 6 23 6 23 12"></polyline>
                 </svg>
               </div>
-              <div class="kpi-value green">+$240.00</div>
-              <div class="kpi-sub green">
+              <div id="dash-today-pnl" class="metric-val green">+$240.00</div>
+              <div class="metric-footer green">
                 <span>+4.80%</span>
                 <svg class="sparkline-svg" viewBox="0 0 50 18">
                   <path d="M 2 14 L 14 10 L 25 13 L 36 5 L 48 2" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round"/>
@@ -179,20 +149,20 @@
               </div>
             </div>
 
-            <div class="kpi-card">
-              <div class="kpi-top">
+            <div class="metric-card">
+              <div class="metric-header">
                 <span>Account Balance</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
                   <line x1="1" y1="10" x2="23" y2="10"></line>
                 </svg>
               </div>
-              <div class="kpi-value">$5,240.00</div>
-              <div class="kpi-sub green">+10.40%</div>
+              <div id="dash-balance" class="metric-val">$5,240.00</div>
+              <div class="metric-footer green">+10.40%</div>
             </div>
 
-            <div class="kpi-card">
-              <div class="kpi-top">
+            <div class="metric-card">
+              <div class="metric-header">
                 <span>Win Rate</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <circle cx="12" cy="12" r="10"></circle>
@@ -200,39 +170,39 @@
                   <circle cx="12" cy="12" r="2"></circle>
                 </svg>
               </div>
-              <div class="kpi-ring-wrap">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                  <div class="kpi-value" style="margin: 0;">68%</div>
-                  <div class="kpi-sub" style="font-size: 9px;">17 of 25 trades</div>
+                  <div class="metric-val" style="margin: 0;">68%</div>
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">17 of 25 trades</div>
                 </div>
-                <svg class="progress-ring" viewBox="0 0 36 36">
-                  <path class="progress-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                  <path class="progress-ring-fill" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <svg class="ring-svg" viewBox="0 0 36 36">
+                  <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                  <path class="ring-fill" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
                 </svg>
               </div>
             </div>
 
-            <div class="kpi-card">
-              <div class="kpi-top">
+            <div class="metric-card">
+              <div class="metric-header">
                 <span>Avg Risk:Reward</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
                   <path d="M18 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4"></path>
                 </svg>
               </div>
-              <div class="kpi-value">1 : 2.1</div>
-              <div class="kpi-sub green">Excellent</div>
+              <div class="metric-val">1 : 2.1</div>
+              <div class="metric-footer green">Excellent</div>
             </div>
 
           </div>
 
           <!-- Recent Trades Table -->
-          <div class="table-panel">
-            <div class="table-header-row">
-              <h3>Recent Trades</h3>
-              <a onclick="switchMainView('screen3')">View all</a>
+          <div class="panel-card">
+            <div class="panel-header">
+              <h3 class="panel-title">Recent Trades</h3>
+              <a class="panel-link" onclick="navigateTo('history')">View all</a>
             </div>
-            <table class="custom-table">
+            <table class="data-table">
               <thead>
                 <tr>
                   <th>PAIR</th>
@@ -243,314 +213,190 @@
                   <th style="text-align: right;">ACTION</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td style="font-weight: 700;">BTC/USD</td>
-                  <td><span class="badge-long">Long</span></td>
-                  <td class="pnl-positive">+$240.00</td>
-                  <td>1 : 2.4</td>
-                  <td style="color: var(--text-muted);">3 Sep 2026</td>
-                  <td style="text-align: right; color: var(--text-dim);">∿  ⋮</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 700;">ETH/USD</td>
-                  <td><span class="badge-short">Short</span></td>
-                  <td class="pnl-negative">-$120.00</td>
-                  <td>1 : 1.1</td>
-                  <td style="color: var(--text-muted);">2 Sep 2026</td>
-                  <td style="text-align: right; color: var(--text-dim);">∿  ⋮</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 700;">BTC/USD</td>
-                  <td><span class="badge-long">Long</span></td>
-                  <td class="pnl-positive">+$380.00</td>
-                  <td>1 : 3.2</td>
-                  <td style="color: var(--text-muted);">1 Sep 2026</td>
-                  <td style="text-align: right; color: var(--text-dim);">∿  ⋮</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 700;">SOL/USD</td>
-                  <td><span class="badge-long">Long</span></td>
-                  <td class="pnl-negative">-$60.00</td>
-                  <td>1 : 0.8</td>
-                  <td style="color: var(--text-muted);">31 Aug 2026</td>
-                  <td style="text-align: right; color: var(--text-dim);">∿  ⋮</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: 700;">XRP/USD</td>
-                  <td><span class="badge-short">Short</span></td>
-                  <td class="pnl-positive">+$150.00</td>
-                  <td>1 : 1.9</td>
-                  <td style="color: var(--text-muted);">30 Aug 2026</td>
-                  <td style="text-align: right; color: var(--text-dim);">∿  ⋮</td>
-                </tr>
+              <tbody id="recent-tbody">
+                <!-- Dynamically Rendered -->
               </tbody>
             </table>
           </div>
 
         </div>
 
-      </div>
 
-
-      <!-- =========================================================
-           SCREEN 2: ADD TRADE (Top-Right)
-           ========================================================= -->
-      <div class="screen-card">
-        
-        <!-- Sidebar -->
-        <div class="screen-sidebar">
-          <div>
-            <div class="sidebar-logo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5">
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                <polyline points="16 7 22 7 22 13"></polyline>
-              </svg>
-              Trade<span>Journal</span>
-            </div>
-
-            <div class="sidebar-nav">
-              <button class="sidebar-item" onclick="switchMainView('screen1')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                Dashboard
-              </button>
-              <button class="sidebar-item" onclick="switchMainView('screen3')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                History
-              </button>
-              <button class="sidebar-item" onclick="switchMainView('screen4')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                Analytics
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                Calendar
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                Settings
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <div class="sidebar-balance-card">
-              <div class="balance-label">Account Balance</div>
-              <div class="balance-amount">$5,240.00</div>
-              <div class="balance-change">+10.4%</div>
-            </div>
-            <div class="sidebar-logout">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-              Logout
-            </div>
-          </div>
-        </div>
-
-        <!-- Main Form Content -->
-        <div class="screen-main">
+        <!-- =========================================================
+             SCREEN 2: ADD TRADE FORM
+             ========================================================= -->
+        <div id="page-add-trade" class="page-view">
           
-          <div class="screen-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;" onclick="switchMainView('screen1')">
+          <div class="form-page-header">
+            <button class="back-btn" onclick="navigateTo('dashboard')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
               </svg>
-              <h1 style="font-size: 16px; font-weight: 700;">Add Trade</h1>
-            </div>
-            <div class="avatar" style="width: 28px; height: 28px; font-size: 11px;">R</div>
+            </button>
+            <h1 style="font-size: 20px; font-weight: 700; color: #FFFFFF;">Add Trade</h1>
           </div>
 
-          <!-- Form Area -->
-          <div class="form-panel">
+          <form id="trade-form" onsubmit="saveTradeHandler(event)" class="form-container">
             
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label class="form-label">Trading Pair</label>
-                <select class="form-select" id="form-pair-canvas">
-                  <option>BTC/USD</option>
-                  <option>ETH/USD</option>
-                  <option>SOL/USD</option>
-                  <option>XRP/USD</option>
+            <div class="form-row-2">
+              <div class="form-field">
+                <label class="field-label">Trading Pair</label>
+                <select id="inp-pair" class="field-select">
+                  <option value="BTC/USD">BTC/USD</option>
+                  <option value="ETH/USD">ETH/USD</option>
+                  <option value="SOL/USD">SOL/USD</option>
+                  <option value="XRP/USD">XRP/USD</option>
+                  <option value="EUR/USD">EUR/USD</option>
+                  <option value="GBP/USD">GBP/USD</option>
                 </select>
               </div>
 
-              <div class="form-group">
-                <label class="form-label">Direction</label>
-                <div class="segmented-control">
-                  <button type="button" class="seg-btn active-long" id="btn-long-canvas" onclick="toggleCanvasDir('LONG')">Long</button>
-                  <button type="button" class="seg-btn" id="btn-short-canvas" onclick="toggleCanvasDir('SHORT')">Short</button>
+              <div class="form-field">
+                <label class="field-label">Direction</label>
+                <div class="dir-segmented">
+                  <button type="button" id="btn-dir-long" class="dir-btn active-long" onclick="selectDirection('LONG')">Long</button>
+                  <button type="button" id="btn-dir-short" class="dir-btn" onclick="selectDirection('SHORT')">Short</button>
                 </div>
+                <input type="hidden" id="inp-dir" value="LONG">
               </div>
             </div>
 
-            <div class="form-grid-3">
-              <div class="form-group">
-                <label class="form-label">Entry Price</label>
-                <input type="text" class="form-input" value="112,450" style="font-family: var(--font-mono);">
+            <div class="form-row-3">
+              <div class="form-field">
+                <label class="field-label">Entry Price</label>
+                <input type="text" id="inp-entry" class="field-input" value="112,450" required style="font-family: var(--font-mono);">
               </div>
-              <div class="form-group">
-                <label class="form-label">Exit Price</label>
-                <input type="text" class="form-input" value="113,120" style="font-family: var(--font-mono);">
+              <div class="form-field">
+                <label class="field-label">Exit Price</label>
+                <input type="text" id="inp-exit" class="field-input" value="113,120" required style="font-family: var(--font-mono);">
               </div>
-              <div class="form-group">
-                <label class="form-label">Profit / Loss</label>
-                <input type="text" class="form-input" value="240" style="font-family: var(--font-mono);">
-              </div>
-            </div>
-
-            <div class="form-grid-3">
-              <div class="form-group">
-                <label class="form-label">Risk : Reward</label>
-                <select class="form-select">
-                  <option>1 : 2</option>
-                  <option>1 : 2.4</option>
-                  <option>1 : 3</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Trading Session</label>
-                <select class="form-select">
-                  <option>London</option>
-                  <option>New York</option>
-                  <option>Asia</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Strategy</label>
-                <select class="form-select">
-                  <option>EMA Breakout</option>
-                  <option>Break & Retest</option>
-                  <option>Support Bounce</option>
-                </select>
+              <div class="form-field">
+                <label class="field-label">Profit / Loss (USD)</label>
+                <input type="number" step="any" id="inp-pnl" class="field-input" value="240" required style="font-family: var(--font-mono);">
               </div>
             </div>
 
-            <div class="form-group" style="margin-bottom: 10px;">
+            <div class="form-row-3">
+              <div class="form-field">
+                <label class="field-label">Risk : Reward</label>
+                <select id="inp-rr" class="field-select">
+                  <option value="1 : 2.4">1 : 2.4</option>
+                  <option value="1 : 2.1">1 : 2.1</option>
+                  <option value="1 : 3.2">1 : 3.2</option>
+                  <option value="1 : 1.5">1 : 1.5</option>
+                  <option value="1 : 1.1">1 : 1.1</option>
+                  <option value="1 : 0.8">1 : 0.8</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Trading Session</label>
+                <select id="inp-session" class="field-select">
+                  <option value="London">London</option>
+                  <option value="New York">New York</option>
+                  <option value="Asia">Asia</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="field-label">Strategy</label>
+                <select id="inp-strategy" class="field-select">
+                  <option value="EMA Breakout">EMA Breakout</option>
+                  <option value="Break & Retest">Break & Retest</option>
+                  <option value="Support Bounce">Support Bounce</option>
+                  <option value="Trend Continuation">Trend Continuation</option>
+                  <option value="Reversal">Reversal</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-field" style="margin-bottom: 16px;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
-                <label class="form-label">Notes</label>
-                <span style="font-size: 9px; font-family: var(--font-mono); color: var(--text-dim);">62/200</span>
+                <label class="field-label">Notes</label>
+                <span id="char-count" style="font-size: 11px; font-family: var(--font-mono); color: var(--text-dim);">62/200</span>
               </div>
-              <textarea class="form-textarea" rows="2" style="resize: none;">EMA 50 breakout with strong volume. Retest and continuation.</textarea>
+              <textarea id="inp-notes" class="field-textarea" rows="3" maxlength="200" oninput="updateCharCount(this)" style="resize: none;">EMA 50 breakout with strong volume. Retest and continuation.</textarea>
             </div>
 
-            <div class="form-group">
-              <label class="form-label">Upload Chart Screenshot</label>
-              <div class="dropzone-box" onclick="showToast('Chart uploaded successfully')">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="dropzone-icon">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                <span style="font-size: 10px; font-weight: 600; color: #FFFFFF;">Click to upload or drag and drop</span>
-                <span style="font-size: 8px; color: var(--text-dim);">PNG, JPG up to 5MB</span>
+            <div class="form-field">
+              <label class="field-label">Upload Chart Screenshot</label>
+              <div class="upload-area" onclick="document.getElementById('chart-file-input').click()">
+                <input type="file" id="chart-file-input" style="display: none;" accept="image/*" onchange="fileChosen(event)">
+                <div class="upload-icon-wrap">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                </div>
+                <span style="font-size: 12px; font-weight: 600; color: #FFFFFF;">Click to upload or drag and drop</span>
+                <span id="file-status-text" style="font-size: 11px; color: var(--text-dim);">PNG, JPG up to 5MB</span>
               </div>
             </div>
 
-            <button type="button" class="btn-full-save" onclick="showToast('Trade saved successfully! (Screen updated)', 'success')">
+            <button type="submit" class="btn-save-full">
               Save Trade
             </button>
 
-          </div>
+          </form>
 
         </div>
 
-      </div>
 
-
-      <!-- =========================================================
-           SCREEN 3: TRADE HISTORY (Bottom-Left)
-           ========================================================= -->
-      <div class="screen-card">
-        
-        <!-- Sidebar -->
-        <div class="screen-sidebar">
-          <div>
-            <div class="sidebar-logo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5">
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                <polyline points="16 7 22 7 22 13"></polyline>
-              </svg>
-              Trade<span>Journal</span>
-            </div>
-
-            <div class="sidebar-nav">
-              <button class="sidebar-item" onclick="switchMainView('screen1')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                Dashboard
-              </button>
-              <button class="sidebar-item active">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                History
-              </button>
-              <button class="sidebar-item" onclick="switchMainView('screen4')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                Analytics
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                Calendar
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                Settings
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <div class="sidebar-balance-card">
-              <div class="balance-label">Account Balance</div>
-              <div class="balance-amount">$5,240.00</div>
-              <div class="balance-change">+10.4%</div>
-            </div>
-            <div class="sidebar-logout">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-              Logout
-            </div>
-          </div>
-        </div>
-
-        <!-- Main History Content -->
-        <div class="screen-main">
+        <!-- =========================================================
+             SCREEN 3: TRADE HISTORY
+             ========================================================= -->
+        <div id="page-history" class="page-view">
           
-          <div class="screen-header">
-            <h1 style="font-size: 16px; font-weight: 700;">Trade History</h1>
-            <div class="avatar" style="width: 28px; height: 28px; font-size: 11px;">R</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+            <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF;">Trade History</h1>
+            <button class="btn-add-trade" onclick="navigateTo('add-trade')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add Trade
+            </button>
           </div>
 
-          <!-- History Table Card -->
-          <div class="table-panel">
+          <div class="panel-card">
             
             <!-- Filters -->
-            <div class="filter-bar">
-              <div class="filter-date-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <div class="history-filters">
+              <div class="filter-date-badge">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
                 01 Aug 2026 – 03 Sep 2026
               </div>
 
-              <select class="filter-select">
-                <option>All Pairs</option>
-                <option>BTC/USD</option>
-                <option>ETH/USD</option>
+              <select id="hist-filter-pair" class="filter-select-box" onchange="filterHistory()">
+                <option value="ALL">All Pairs</option>
+                <option value="BTC/USD">BTC/USD</option>
+                <option value="ETH/USD">ETH/USD</option>
+                <option value="SOL/USD">SOL/USD</option>
+                <option value="XRP/USD">XRP/USD</option>
               </select>
 
-              <select class="filter-select">
-                <option>All</option>
-                <option>Long</option>
-                <option>Short</option>
+              <select id="hist-filter-dir" class="filter-select-box" onchange="filterHistory()">
+                <option value="ALL">All</option>
+                <option value="LONG">Long</option>
+                <option value="SHORT">Short</option>
               </select>
 
-              <select class="filter-select">
-                <option>Win / Loss</option>
-                <option>Win</option>
-                <option>Loss</option>
+              <select id="hist-filter-outcome" class="filter-select-box" onchange="filterHistory()">
+                <option value="ALL">Win / Loss</option>
+                <option value="WIN">Win</option>
+                <option value="LOSS">Loss</option>
               </select>
 
-              <button class="btn-reset" onclick="showToast('Filters reset')">Reset</button>
+              <button class="btn-reset-filters" onclick="resetFilters()">Reset</button>
             </div>
 
             <!-- Table -->
-            <table class="custom-table">
+            <table class="data-table">
               <thead>
                 <tr>
                   <th>DATE</th>
@@ -559,86 +405,24 @@
                   <th>P/L</th>
                   <th>R:R</th>
                   <th>STRATEGY</th>
-                  <th style="text-align: right;"></th>
+                  <th style="text-align: right;">ACTION</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td style="color: var(--text-muted);">3 Sep 2026</td>
-                  <td style="font-weight: 700;">BTC/USD</td>
-                  <td><span class="badge-long">Long</span></td>
-                  <td class="pnl-positive">+$240.00</td>
-                  <td>1 : 2.4</td>
-                  <td style="font-family: var(--font-sans);">EMA Breakout</td>
-                  <td style="text-align: right; color: var(--text-dim);">&gt;</td>
-                </tr>
-                <tr>
-                  <td style="color: var(--text-muted);">2 Sep 2026</td>
-                  <td style="font-weight: 700;">ETH/USD</td>
-                  <td><span class="badge-short">Short</span></td>
-                  <td class="pnl-negative">-$120.00</td>
-                  <td>1 : 1.1</td>
-                  <td style="font-family: var(--font-sans);">Break & Retest</td>
-                  <td style="text-align: right; color: var(--text-dim);">&gt;</td>
-                </tr>
-                <tr>
-                  <td style="color: var(--text-muted);">1 Sep 2026</td>
-                  <td style="font-weight: 700;">BTC/USD</td>
-                  <td><span class="badge-long">Long</span></td>
-                  <td class="pnl-positive">+$380.00</td>
-                  <td>1 : 3.2</td>
-                  <td style="font-family: var(--font-sans);">EMA Breakout</td>
-                  <td style="text-align: right; color: var(--text-dim);">&gt;</td>
-                </tr>
-                <tr>
-                  <td style="color: var(--text-muted);">31 Aug 2026</td>
-                  <td style="font-weight: 700;">SOL/USD</td>
-                  <td><span class="badge-long">Long</span></td>
-                  <td class="pnl-negative">-$60.00</td>
-                  <td>1 : 0.8</td>
-                  <td style="font-family: var(--font-sans);">Support Bounce</td>
-                  <td style="text-align: right; color: var(--text-dim);">&gt;</td>
-                </tr>
-                <tr>
-                  <td style="color: var(--text-muted);">30 Aug 2026</td>
-                  <td style="font-weight: 700;">XRP/USD</td>
-                  <td><span class="badge-short">Short</span></td>
-                  <td class="pnl-positive">+$150.00</td>
-                  <td>1 : 1.9</td>
-                  <td style="font-family: var(--font-sans);">Trend Continuation</td>
-                  <td style="text-align: right; color: var(--text-dim);">&gt;</td>
-                </tr>
-                <tr>
-                  <td style="color: var(--text-muted);">29 Aug 2026</td>
-                  <td style="font-weight: 700;">BTC/USD</td>
-                  <td><span class="badge-long">Long</span></td>
-                  <td class="pnl-positive">+$210.00</td>
-                  <td>1 : 2.1</td>
-                  <td style="font-family: var(--font-sans);">EMA Breakout</td>
-                  <td style="text-align: right; color: var(--text-dim);">&gt;</td>
-                </tr>
-                <tr>
-                  <td style="color: var(--text-muted);">28 Aug 2026</td>
-                  <td style="font-weight: 700;">ETH/USD</td>
-                  <td><span class="badge-short">Short</span></td>
-                  <td class="pnl-negative">-$200.00</td>
-                  <td>1 : 1.3</td>
-                  <td style="font-family: var(--font-sans);">Reversal</td>
-                  <td style="text-align: right; color: var(--text-dim);">&gt;</td>
-                </tr>
+              <tbody id="history-tbody">
+                <!-- Dynamically Rendered -->
               </tbody>
             </table>
 
             <!-- Pagination -->
-            <div class="pagination-footer">
-              <span>Showing 1 to 7 of 25 results</span>
-              <div class="page-nums">
-                <button class="page-btn">&lt;</button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">&gt;</button>
+            <div class="pagination-bar">
+              <span id="history-count-text">Showing 1 to 7 of 25 results</span>
+              <div class="page-numbers">
+                <button class="p-btn">&lt;</button>
+                <button class="p-btn active">1</button>
+                <button class="p-btn">2</button>
+                <button class="p-btn">3</button>
+                <button class="p-btn">4</button>
+                <button class="p-btn">&gt;</button>
               </div>
             </div>
 
@@ -646,191 +430,135 @@
 
         </div>
 
-      </div>
 
-
-      <!-- =========================================================
-           SCREEN 4: ANALYTICS (Bottom-Right)
-           ========================================================= -->
-      <div class="screen-card">
-        
-        <!-- Sidebar -->
-        <div class="screen-sidebar">
-          <div>
-            <div class="sidebar-logo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.5">
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                <polyline points="16 7 22 7 22 13"></polyline>
-              </svg>
-              Trade<span>Journal</span>
-            </div>
-
-            <div class="sidebar-nav">
-              <button class="sidebar-item" onclick="switchMainView('screen1')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                Dashboard
-              </button>
-              <button class="sidebar-item" onclick="switchMainView('screen3')">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                History
-              </button>
-              <button class="sidebar-item active">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                Analytics
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                Calendar
-              </button>
-              <button class="sidebar-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                Settings
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <div class="sidebar-balance-card">
-              <div class="balance-label">Account Balance</div>
-              <div class="balance-amount">$5,240.00</div>
-              <div class="balance-change">+10.4%</div>
-            </div>
-            <div class="sidebar-logout">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-              Logout
-            </div>
-          </div>
-        </div>
-
-        <!-- Main Analytics Content -->
-        <div class="screen-main">
+        <!-- =========================================================
+             SCREEN 4: ANALYTICS
+             ========================================================= -->
+        <div id="page-analytics" class="page-view">
           
-          <div class="screen-header">
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="cursor: pointer;" onclick="switchMainView('screen1')">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-              <h1 style="font-size: 16px; font-weight: 700;">Analytics</h1>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <button class="back-btn" onclick="navigateTo('dashboard')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+              </button>
+              <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF;">Analytics</h1>
             </div>
-            <div class="avatar" style="width: 28px; height: 28px; font-size: 11px;">R</div>
           </div>
 
           <!-- 4 Stat Cards -->
-          <div class="kpi-grid-4">
-            <div class="kpi-card">
-              <div class="kpi-top"><span>Win Rate</span></div>
-              <div class="kpi-ring-wrap">
+          <div class="metrics-row-4">
+            
+            <div class="metric-card">
+              <div class="metric-header"><span>Win Rate</span></div>
+              <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                  <div class="kpi-value" style="margin: 0;">68%</div>
-                  <div class="kpi-sub" style="font-size: 9px;">17 of 25 trades</div>
+                  <div class="metric-val" style="margin: 0;">68%</div>
+                  <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">17 of 25 trades</div>
                 </div>
-                <svg class="progress-ring" viewBox="0 0 36 36">
-                  <path class="progress-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                  <path class="progress-ring-fill" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <svg class="ring-svg" viewBox="0 0 36 36">
+                  <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                  <path class="ring-fill" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
                 </svg>
               </div>
             </div>
 
-            <div class="kpi-card">
-              <div class="kpi-top"><span>Total Trades</span></div>
-              <div class="kpi-value">25</div>
-              <div class="kpi-sub">This Month</div>
+            <div class="metric-card">
+              <div class="metric-header"><span>Total Trades</span></div>
+              <div class="metric-val">25</div>
+              <div class="metric-footer" style="color: var(--text-muted);">This Month</div>
             </div>
 
-            <div class="kpi-card">
-              <div class="kpi-top"><span>Net Profit %</span></div>
-              <div class="kpi-value green">+10.4%</div>
-              <div class="kpi-sub green">+$490.00</div>
+            <div class="metric-card">
+              <div class="metric-header"><span>Net Profit %</span></div>
+              <div class="metric-val green">+10.4%</div>
+              <div class="metric-footer green">+$490.00</div>
             </div>
 
-            <div class="kpi-card">
-              <div class="kpi-top"><span>Average R:R</span></div>
-              <div class="kpi-value">1 : 2.1</div>
-              <div class="kpi-sub green">Excellent</div>
+            <div class="metric-card">
+              <div class="metric-header"><span>Average R:R</span></div>
+              <div class="metric-val">1 : 2.1</div>
+              <div class="metric-footer green">Excellent</div>
             </div>
+
           </div>
 
           <!-- 2 Large Charts -->
-          <div class="charts-grid-2">
+          <div class="charts-split-2">
             
             <!-- Equity Curve Chart -->
-            <div class="chart-panel">
-              <div class="chart-header">
-                <h3>Equity Curve</h3>
-                <select class="chart-select">
+            <div class="chart-card">
+              <div class="chart-title-bar">
+                <h3 class="chart-heading">Equity Curve</h3>
+                <select class="chart-dropdown">
                   <option>This Month</option>
                   <option>All Time</option>
                 </select>
               </div>
-              <div class="chart-svg-wrap">
-                <svg viewBox="0 0 300 120">
+              <div class="svg-chart-container">
+                <svg viewBox="0 0 450 180">
                   <defs>
-                    <linearGradient id="eqFillGrad" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="eqGradient" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stop-color="#22C55E" stop-opacity="0.25"/>
                       <stop offset="100%" stop-color="#22C55E" stop-opacity="0.0"/>
                     </linearGradient>
                   </defs>
-                  <!-- Guidelines -->
-                  <line x1="20" y1="20" x2="290" y2="20" stroke="#1E293B" stroke-dasharray="2 2"/>
-                  <line x1="20" y1="50" x2="290" y2="50" stroke="#1E293B" stroke-dasharray="2 2"/>
-                  <line x1="20" y1="80" x2="290" y2="80" stroke="#1E293B" stroke-dasharray="2 2"/>
-                  <line x1="20" y1="110" x2="290" y2="110" stroke="#1E293B" stroke-dasharray="2 2"/>
+                  <line x1="30" y1="30" x2="440" y2="30" stroke="#1E293B" stroke-dasharray="3 3"/>
+                  <line x1="30" y1="75" x2="440" y2="75" stroke="#1E293B" stroke-dasharray="3 3"/>
+                  <line x1="30" y1="120" x2="440" y2="120" stroke="#1E293B" stroke-dasharray="3 3"/>
+                  <line x1="30" y1="165" x2="440" y2="165" stroke="#1E293B" stroke-dasharray="3 3"/>
                   
-                  <text x="2" y="23" fill="#64748B" font-size="7" font-family="monospace">$6K</text>
-                  <text x="2" y="53" fill="#64748B" font-size="7" font-family="monospace">$5.5K</text>
-                  <text x="2" y="83" fill="#64748B" font-size="7" font-family="monospace">$5K</text>
-                  <text x="2" y="113" fill="#64748B" font-size="7" font-family="monospace">$4.5K</text>
+                  <text x="5" y="34" fill="#64748B" font-size="10" font-family="monospace">$6K</text>
+                  <text x="5" y="79" fill="#64748B" font-size="10" font-family="monospace">$5.5K</text>
+                  <text x="5" y="124" fill="#64748B" font-size="10" font-family="monospace">$5K</text>
+                  <text x="5" y="169" fill="#64748B" font-size="10" font-family="monospace">$4.5K</text>
 
-                  <!-- Area Fill -->
-                  <path d="M 25 105 L 50 90 L 75 100 L 100 80 L 125 85 L 150 65 L 175 75 L 200 50 L 225 60 L 250 35 L 280 15 L 280 115 L 25 115 Z" fill="url(#eqFillGrad)"/>
-                  
-                  <!-- Main Curve -->
-                  <path d="M 25 105 L 50 90 L 75 100 L 100 80 L 125 85 L 150 65 L 175 75 L 200 50 L 225 60 L 250 35 L 280 15" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <circle cx="280" cy="15" r="3" fill="#FFFFFF" stroke="#22C55E" stroke-width="1.5"/>
+                  <path d="M 40 150 L 75 130 L 110 145 L 145 115 L 180 125 L 215 95 L 250 110 L 285 75 L 320 85 L 355 55 L 390 65 L 430 35 L 430 175 L 40 175 Z" fill="url(#eqGradient)"/>
+                  <path d="M 40 150 L 75 130 L 110 145 L 145 115 L 180 125 L 215 95 L 250 110 L 285 75 L 320 85 L 355 55 L 390 65 L 430 35" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="430" cy="35" r="4" fill="#FFFFFF" stroke="#22C55E" stroke-width="2"/>
                 </svg>
               </div>
-              <div style="display: flex; justify-content: space-between; font-size: 8px; color: var(--text-dim); font-family: var(--font-mono); padding: 0 10px;">
+              <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); font-family: var(--font-mono); padding: 0 16px; margin-top: 6px;">
                 <span>1</span><span>5</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30</span>
               </div>
             </div>
 
             <!-- Monthly P/L Bar Chart -->
-            <div class="chart-panel">
-              <div class="chart-header">
-                <h3>Monthly P/L</h3>
-                <select class="chart-select">
+            <div class="chart-card">
+              <div class="chart-title-bar">
+                <h3 class="chart-heading">Monthly P/L</h3>
+                <select class="chart-dropdown">
                   <option>This Year</option>
                   <option>Last Year</option>
                 </select>
               </div>
-              <div class="chart-svg-wrap">
-                <svg viewBox="0 0 300 120">
-                  <!-- Zero line -->
-                  <line x1="20" y1="60" x2="290" y2="60" stroke="#334155" stroke-width="1"/>
+              <div class="svg-chart-container">
+                <svg viewBox="0 0 450 180">
+                  <line x1="30" y1="90" x2="440" y2="90" stroke="#334155" stroke-width="1.5"/>
                   
-                  <text x="2" y="20" fill="#64748B" font-size="7" font-family="monospace">$1K</text>
-                  <text x="2" y="40" fill="#64748B" font-size="7" font-family="monospace">$500</text>
-                  <text x="2" y="62" fill="#64748B" font-size="7" font-family="monospace">$0</text>
-                  <text x="2" y="85" fill="#64748B" font-size="7" font-family="monospace">-$500</text>
-                  <text x="2" y="110" fill="#64748B" font-size="7" font-family="monospace">-$1K</text>
+                  <text x="5" y="28" fill="#64748B" font-size="10" font-family="monospace">$1K</text>
+                  <text x="5" y="58" fill="#64748B" font-size="10" font-family="monospace">$500</text>
+                  <text x="5" y="94" fill="#64748B" font-size="10" font-family="monospace">$0</text>
+                  <text x="5" y="130" fill="#64748B" font-size="10" font-family="monospace">-$500</text>
+                  <text x="5" y="165" fill="#64748B" font-size="10" font-family="monospace">-$1K</text>
 
-                  <!-- Bars Jan-Dec -->
-                  <rect x="25" y="55" width="10" height="5" rx="1.5" fill="#22C55E"/>
-                  <rect x="47" y="50" width="10" height="10" rx="1.5" fill="#22C55E"/>
-                  <rect x="69" y="60" width="10" height="15" rx="1.5" fill="#EF4444"/>
-                  <rect x="91" y="38" width="10" height="22" rx="1.5" fill="#22C55E"/>
-                  <rect x="113" y="60" width="10" height="25" rx="1.5" fill="#EF4444"/>
-                  <rect x="135" y="45" width="10" height="15" rx="1.5" fill="#22C55E"/>
-                  <rect x="157" y="32" width="10" height="28" rx="1.5" fill="#22C55E"/>
-                  <rect x="179" y="15" width="10" height="45" rx="1.5" fill="#22C55E"/>
-                  <rect x="201" y="5" width="10" height="55" rx="1.5" fill="#22C55E"/>
-                  <rect x="223" y="60" width="10" height="42" rx="1.5" fill="#EF4444"/>
-                  <rect x="245" y="58" width="10" height="2" rx="1" fill="#22C55E"/>
-                  <rect x="267" y="60" width="10" height="2" rx="1" fill="#EF4444"/>
+                  <rect x="42" y="82" width="14" height="8" rx="2" fill="#22C55E"/>
+                  <rect x="74" y="76" width="14" height="14" rx="2" fill="#22C55E"/>
+                  <rect x="106" y="90" width="14" height="22" rx="2" fill="#EF4444"/>
+                  <rect x="138" y="58" width="14" height="32" rx="2" fill="#22C55E"/>
+                  <rect x="170" y="90" width="14" height="36" rx="2" fill="#EF4444"/>
+                  <rect x="202" y="68" width="14" height="22" rx="2" fill="#22C55E"/>
+                  <rect x="234" y="48" width="14" height="42" rx="2" fill="#22C55E"/>
+                  <rect x="266" y="22" width="14" height="68" rx="2" fill="#22C55E"/>
+                  <rect x="298" y="10" width="14" height="80" rx="2" fill="#22C55E"/>
+                  <rect x="330" y="90" width="14" height="65" rx="2" fill="#EF4444"/>
+                  <rect x="362" y="86" width="14" height="4" rx="1.5" fill="#22C55E"/>
+                  <rect x="394" y="90" width="14" height="3" rx="1.5" fill="#EF4444"/>
                 </svg>
               </div>
-              <div style="display: flex; justify-content: space-between; font-size: 7px; color: var(--text-dim); font-family: var(--font-mono); padding: 0 4px;">
+              <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--text-dim); font-family: var(--font-mono); padding: 0 8px; margin-top: 6px;">
                 <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
               </div>
             </div>
@@ -838,85 +566,303 @@
           </div>
 
           <!-- Bottom Summary Cards -->
-          <div class="summary-grid-4">
-            <div class="summary-card">
-              <div class="summary-label">Best Day</div>
-              <div class="summary-val green">+$820.00</div>
-              <div class="summary-sub">18 Aug 2026</div>
+          <div class="summary-cards-4">
+            <div class="sum-card">
+              <div class="sum-label">Best Day</div>
+              <div class="sum-val green">+$820.00</div>
+              <div class="sum-sub">18 Aug 2026</div>
             </div>
-            <div class="summary-card">
-              <div class="summary-label">Worst Day</div>
-              <div class="summary-val red">-$410.00</div>
-              <div class="summary-sub">11 Aug 2026</div>
+            <div class="sum-card">
+              <div class="sum-label">Worst Day</div>
+              <div class="sum-val red">-$410.00</div>
+              <div class="sum-sub">11 Aug 2026</div>
             </div>
-            <div class="summary-card">
-              <div class="summary-label">Best Trade</div>
-              <div class="summary-val green">+$380.00</div>
-              <div class="summary-sub">BTC/USD • 1 Sep 2026</div>
+            <div class="sum-card">
+              <div class="sum-label">Best Trade</div>
+              <div class="sum-val green">+$380.00</div>
+              <div class="sum-sub">BTC/USD • 1 Sep 2026</div>
             </div>
-            <div class="summary-card">
-              <div class="summary-label">Worst Trade</div>
-              <div class="summary-val red">-$200.00</div>
-              <div class="summary-sub">ETH/USD • 28 Aug 2026</div>
+            <div class="sum-card">
+              <div class="sum-label">Worst Trade</div>
+              <div class="sum-val red">-$200.00</div>
+              <div class="sum-sub">ETH/USD • 28 Aug 2026</div>
             </div>
           </div>
 
         </div>
 
-      </div>
 
+        <!-- =========================================================
+             SCREEN 5: CALENDAR (Bonus)
+             ========================================================= -->
+        <div id="page-calendar" class="page-view">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+            <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF;">Trading Calendar — September 2026</h1>
+            <span style="font-size: 12px; font-family: var(--font-mono); color: var(--emerald); background: rgba(34, 197, 94, 0.1); padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(34, 197, 94, 0.2);">Monthly PnL: +$1,240.00</span>
+          </div>
+          <div id="calendar-view-grid" class="panel-card" style="padding: 24px;"></div>
+        </div>
+
+
+        <!-- =========================================================
+             SCREEN 6: SETTINGS (Bonus)
+             ========================================================= -->
+        <div id="page-settings" class="page-view">
+          <h1 style="font-size: 22px; font-weight: 700; color: #FFFFFF; margin-bottom: 24px;">Account Settings</h1>
+          <div class="form-container" style="margin: 0; max-width: 540px;">
+            <div class="form-field" style="margin-bottom: 14px;">
+              <label class="field-label">Trader Name</label>
+              <input type="text" value="Rajiv Gowda" class="field-input">
+            </div>
+            <div class="form-field" style="margin-bottom: 14px;">
+              <label class="field-label">Account Currency</label>
+              <select class="field-select">
+                <option>USD ($)</option>
+                <option>EUR (€)</option>
+                <option>GBP (£)</option>
+              </select>
+            </div>
+            <div class="form-field" style="margin-bottom: 20px;">
+              <label class="field-label">Max Risk Per Trade (%)</label>
+              <input type="number" value="1.0" class="field-input" style="font-family: var(--font-mono);">
+            </div>
+            <button type="button" class="btn-save-full" onclick="showToast('Preferences updated successfully', 'success')">Save Settings</button>
+          </div>
+        </div>
+
+      </div>
     </div>
 
-  </main>
+  </div>
 
   <!-- Toast Notification -->
-  <div id="toast" class="toast-box">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2">
+  <div id="toast" class="toast-notice">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2">
       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
       <polyline points="22 4 12 14.01 9 11.01"></polyline>
     </svg>
-    <span id="toast-text">Action completed successfully</span>
+    <span id="toast-text">Trade saved successfully</span>
   </div>
 
+  <!-- =========================================================================
+       INTERACTIVE JAVASCRIPT STATE ENGINE
+       ========================================================================= -->
   <script>
+    // Trading state database
+    let trades = [
+      { id: 1, pair: 'BTC/USD', dir: 'LONG', pnl: 240.00, rr: '1 : 2.4', date: '3 Sep 2026', strat: 'EMA Breakout' },
+      { id: 2, pair: 'ETH/USD', dir: 'SHORT', pnl: -120.00, rr: '1 : 1.1', date: '2 Sep 2026', strat: 'Break & Retest' },
+      { id: 3, pair: 'BTC/USD', dir: 'LONG', pnl: 380.00, rr: '1 : 3.2', date: '1 Sep 2026', strat: 'EMA Breakout' },
+      { id: 4, pair: 'SOL/USD', dir: 'LONG', pnl: -60.00, rr: '1 : 0.8', date: '31 Aug 2026', strat: 'Support Bounce' },
+      { id: 5, pair: 'XRP/USD', dir: 'SHORT', pnl: 150.00, rr: '1 : 1.9', date: '30 Aug 2026', strat: 'Trend Continuation' },
+      { id: 6, pair: 'BTC/USD', dir: 'LONG', pnl: 210.00, rr: '1 : 2.1', date: '29 Aug 2026', strat: 'EMA Breakout' },
+      { id: 7, pair: 'ETH/USD', dir: 'SHORT', pnl: -200.00, rr: '1 : 1.3', date: '28 Aug 2026', strat: 'Reversal' }
+    ];
+
+    // Navigation Router (Only ONE page is active at a time)
+    function navigateTo(pageId) {
+      // Update sidebar nav items
+      document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
+      const activeNav = document.getElementById('nav-' + pageId);
+      if (activeNav) activeNav.classList.add('active');
+
+      // Update page views
+      document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active-page'));
+      const targetPage = document.getElementById('page-' + pageId);
+      if (targetPage) {
+        targetPage.classList.add('active-page');
+      }
+
+      // Reset scroll position
+      const surface = document.querySelector('.page-surface');
+      if (surface) surface.scrollTop = 0;
+    }
+
+    // Render Recent Trades on Dashboard
+    function renderDashboard() {
+      const tbody = document.getElementById('recent-tbody');
+      if (!tbody) return;
+
+      tbody.innerHTML = trades.slice(0, 5).map(t => {
+        const isLong = t.dir === 'LONG';
+        const isPos = t.pnl > 0;
+        return `
+          <tr>
+            <td style="font-weight: 700;">${t.pair}</td>
+            <td><span class="${isLong ? 'badge-long' : 'badge-short'}">${isLong ? 'Long' : 'Short'}</span></td>
+            <td class="${isPos ? 'pnl-pos' : 'pnl-neg'}">${isPos ? '+' : ''}$${Math.abs(t.pnl).toFixed(2)}</td>
+            <td>${t.rr}</td>
+            <td style="color: var(--text-muted);">${t.date}</td>
+            <td style="text-align: right; color: var(--text-dim); cursor: pointer;" onclick="showToast('Inspecting ${t.pair} trade retrospective')">∿  ⋮</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Render Trade History
+    function renderHistory(items) {
+      const tbody = document.getElementById('history-tbody');
+      const count = document.getElementById('history-count-text');
+      if (!tbody) return;
+
+      if (count) count.innerText = `Showing 1 to ${items.length} of ${trades.length} results`;
+
+      if (items.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 24px; color: var(--text-dim);">No trades match selected filters.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = items.map(t => {
+        const isLong = t.dir === 'LONG';
+        const isPos = t.pnl > 0;
+        return `
+          <tr>
+            <td style="color: var(--text-muted);">${t.date}</td>
+            <td style="font-weight: 700;">${t.pair}</td>
+            <td><span class="${isLong ? 'badge-long' : 'badge-short'}">${isLong ? 'Long' : 'Short'}</span></td>
+            <td class="${isPos ? 'pnl-pos' : 'pnl-neg'}">${isPos ? '+' : ''}$${Math.abs(t.pnl).toFixed(2)}</td>
+            <td>${t.rr}</td>
+            <td style="font-family: var(--font-sans);">${t.strat}</td>
+            <td style="text-align: right; color: var(--text-dim); cursor: pointer;" onclick="showToast('Viewing retrospective for ${t.pair}')">&gt;</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // Direction Toggle in Add Trade Form
+    function selectDirection(dir) {
+      document.getElementById('inp-dir').value = dir;
+      const btnLong = document.getElementById('btn-dir-long');
+      const btnShort = document.getElementById('btn-dir-short');
+      if (dir === 'LONG') {
+        btnLong.className = 'dir-btn active-long';
+        btnShort.className = 'dir-btn';
+      } else {
+        btnShort.className = 'dir-btn active-short';
+        btnLong.className = 'dir-btn';
+      }
+    }
+
+    // Character Counter
+    function updateCharCount(el) {
+      const count = document.getElementById('char-count');
+      if (count) count.innerText = `${el.value.length}/200`;
+    }
+
+    // File Upload Handler
+    function fileChosen(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('file-status-text').innerText = `Selected: ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+        showToast('Attached screenshot ' + file.name);
+      }
+    }
+
+    // Save Trade Form Submission
+    function saveTradeHandler(e) {
+      e.preventDefault();
+      const pair = document.getElementById('inp-pair').value;
+      const dir = document.getElementById('inp-dir').value;
+      const pnl = parseFloat(document.getElementById('inp-pnl').value) || 0;
+      const rr = document.getElementById('inp-rr').value;
+      const strat = document.getElementById('inp-strategy').value;
+
+      const newTrade = {
+        id: Date.now(),
+        pair,
+        dir,
+        pnl,
+        rr,
+        date: '3 Sep 2026',
+        strat
+      };
+
+      trades.unshift(newTrade);
+      renderDashboard();
+      renderHistory(trades);
+
+      showToast(`Trade for ${pair} (${dir}) saved successfully!`, 'success');
+      navigateTo('dashboard');
+    }
+
+    // History Filters
+    function filterHistory() {
+      const pair = document.getElementById('hist-filter-pair').value;
+      const dir = document.getElementById('hist-filter-dir').value;
+      const outcome = document.getElementById('hist-filter-outcome').value;
+
+      const filtered = trades.filter(t => {
+        if (pair !== 'ALL' && t.pair !== pair) return false;
+        if (dir !== 'ALL' && t.dir !== dir) return false;
+        if (outcome === 'WIN' && t.pnl <= 0) return false;
+        if (outcome === 'LOSS' && t.pnl >= 0) return false;
+        return true;
+      });
+
+      renderHistory(filtered);
+    }
+
+    function resetFilters() {
+      document.getElementById('hist-filter-pair').value = 'ALL';
+      document.getElementById('hist-filter-dir').value = 'ALL';
+      document.getElementById('hist-filter-outcome').value = 'ALL';
+      renderHistory(trades);
+    }
+
+    // Calendar Renderer
+    function renderCalendar() {
+      const container = document.getElementById('calendar-view-grid');
+      if (!container) return;
+
+      const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+      let html = `<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 12px; font-size: 11px; font-weight: 700; color: var(--text-dim); text-align: center; text-transform: uppercase;">
+        ${days.map(d => `<div>${d}</div>`).join('')}
+      </div><div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-size: 12px; font-family: var(--font-mono);">`;
+
+      html += `<div style="padding: 14px; border-radius: 12px; background: rgba(8, 13, 26, 0.4); border: 1px solid rgba(30, 41, 59, 0.4); opacity: 0.3;"></div>`;
+
+      for (let day = 1; day <= 30; day++) {
+        let pnlText = '';
+        let borderStyle = 'border: 1px solid var(--border-card); background: var(--bg-input);';
+
+        if (day === 1) {
+          pnlText = '<span style="color: var(--emerald); font-weight: 700; display: block; margin-top: 4px;">+$380.00</span><span style="font-size: 10px; color: var(--text-dim);">1 trade</span>';
+          borderStyle = 'border: 1px solid rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.05);';
+        } else if (day === 2) {
+          pnlText = '<span style="color: var(--red-loss-text); font-weight: 700; display: block; margin-top: 4px;">-$120.00</span><span style="font-size: 10px; color: var(--text-dim);">1 trade</span>';
+          borderStyle = 'border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.05);';
+        } else if (day === 3) {
+          pnlText = '<span style="color: var(--emerald); font-weight: 700; display: block; margin-top: 4px;">+$240.00</span><span style="font-size: 10px; color: var(--text-dim);">1 trade</span>';
+          borderStyle = 'border: 1px solid rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.05);';
+        }
+
+        html += `
+          <div style="padding: 14px; border-radius: 12px; ${borderStyle} min-height: 80px; display: flex; flex-direction: column; justify-content: space-between;">
+            <span style="color: var(--text-muted); font-weight: 700;">${day}</span>
+            <div>${pnlText}</div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+
+    // Toast Alert
     function showToast(msg) {
       const toast = document.getElementById('toast');
       const text = document.getElementById('toast-text');
       text.innerText = msg;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 3200);
     }
 
-    function switchMainView(mode) {
-      const btnCanvas = document.getElementById('btn-canvas-mode');
-      const btnInteractive = document.getElementById('btn-interactive-mode');
-      
-      if (mode === 'canvas') {
-        btnCanvas.classList.add('active');
-        btnInteractive.classList.remove('active');
-        document.querySelectorAll('.screen-card').forEach(c => {
-          c.classList.remove('full-view');
-        });
-      } else {
-        btnInteractive.classList.add('active');
-        btnCanvas.classList.remove('active');
-        showToast('Viewing full screen mode. Click 4-Screen Canvas to return to 2x2 presentation.');
-      }
-    }
-
-    function toggleCanvasDir(dir) {
-      const btnL = document.getElementById('btn-long-canvas');
-      const btnS = document.getElementById('btn-short-canvas');
-      if (dir === 'LONG') {
-        btnL.className = 'seg-btn active-long';
-        btnS.className = 'seg-btn';
-      } else {
-        btnS.className = 'seg-btn active-short';
-        btnL.className = 'seg-btn';
-      }
-    }
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      renderDashboard();
+      renderHistory(trades);
+      renderCalendar();
+    });
   </script>
 </body>
 </html>
